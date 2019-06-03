@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "557877099140",
+    "firebase_url": "https://metodologiaapp.firebaseio.com",
+    "project_id": "metodologiaapp",
+    "storage_bucket": "metodologiaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557877099140:android:40f427ea56b4e9f0",
+        "android_client_info": {
+          "package_name": "com.utn.mdq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "557877099140-hfigbjfe2v1ddohjmkc01is2r2oso8lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg86vIRBT2pYUraOpivizAT2zYr8RPzO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "557877099140-hfigbjfe2v1ddohjmkc01is2r2oso8lm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
