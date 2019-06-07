@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 
 class Category {
 
@@ -5,6 +6,7 @@ class Category {
   String url;
   String token;
   String method;
+  IconData icono;
 
-  Category(this.name, this.url, this.token, this.method);
+  Category(this.name, this.url, this.token, this.method, this.icono);
 }

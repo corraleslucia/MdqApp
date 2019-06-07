@@ -36,16 +36,16 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     categories = new List();
-    categories.add(new Category("Hoteles", "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar", "12345678901234567890123456789012", "POST"));
-    categories.add(new Category("Gastronomia", "", "", ""));
-    categories.add(new Category("Museos", "", "", ""));
-    categories.add(new Category("Playas", "", "", ""));
-    categories.add(new Category("Transportes", "", "", ""));
-    categories.add(new Category("Lugares", "", "", ""));
-    categories.add(new Category("Inmobiliarias", "", "", ""));
-    categories.add(new Category("Eventos", "", "", ""));
-    categories.add(new Category("Congresos", "", "", ""));
-    categories.add(new Category("Agencias de viajes", "", "", ""));
+    categories.add(new Category("Hoteles", "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar", "12345678901234567890123456789012", "POST", Icons.hotel));
+    categories.add(new Category("Gastronomia", "", "", "", Icons.restaurant));
+    categories.add(new Category("Museos", "", "", "", Icons.account_balance));
+    categories.add(new Category("Playas", "", "", "", Icons.beach_access));
+    categories.add(new Category("Transportes", "", "", "", Icons.directions_bus));
+    categories.add(new Category("Lugares", "", "", "", Icons.place));
+    categories.add(new Category("Inmobiliarias", "", "", "", Icons.home));
+    categories.add(new Category("Eventos", "", "", "", Icons.event));
+    categories.add(new Category("Congresos", "", "", "", Icons.business));
+    categories.add(new Category("Agencias de viajes", "", "", "", Icons.airplanemode_active));
     this.dataList = new List();
 
     _checkEmailVerification();
@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontSize: 20,
                   )),
-              trailing: Icon(Icons.beach_access),
+              trailing: Icon(categories[i].icono),
               contentPadding: EdgeInsets.fromLTRB(20,0,20,0),
             ),
           ),
