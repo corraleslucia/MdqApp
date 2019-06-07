@@ -214,11 +214,11 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: 100.0,
           child: InkWell(
-            splashColor: Colors.lightBlueAccent,
+            splashColor: Colors.deepOrange,
             onTap: () async {
               this.category = categories[i];
               await this.getCateogorias();
-              await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList));
+              await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList, this.widget.auth));
             },
             child: ListTile(
               title: Text(

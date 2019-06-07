@@ -250,7 +250,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
           child: new RaisedButton(
             elevation: 5.0,
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.blue,
+            color: Colors.orangeAccent,
             child: _formMode == FormMode.LOGIN
                 ? new Text('Login',
                 style: new TextStyle(fontSize: 20.0, color: Colors.white))
