@@ -1,6 +1,6 @@
-# mdq
+# MdqApp
 
-A new Flutter application.
+Aplicación Flutter de turismo en Mar del Plata que brinda información acerca de lugares turíscos y de interes general en la ciudad.
 
 ## Getting Started
 
