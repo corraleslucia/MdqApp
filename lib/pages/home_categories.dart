@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () async {
               this.category = categories[i];
               await this.getCateogorias();
-              await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList, this.widget.auth));
+              await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList, this.widget.auth, this.widget.onSignedOut, this.widget.userId));
             },
             child: ListTile(
               title: Text(

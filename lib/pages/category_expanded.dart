@@ -20,9 +20,9 @@ class CategoryExpanded extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _CategoryExpandedState();
 
-  static Route<dynamic> route(Category cat, List categories, BaseAuth auth) {
+  static Route<dynamic> route(Category cat, List categories, BaseAuth auth, VoidCallback onSignedOut, String userId) {
     return MaterialPageRoute(
-      builder: (context) => CategoryExpanded(auth: auth,category: cat, hotelsData: categories),
+      builder: (context) => CategoryExpanded(auth: auth, onSignedOut: onSignedOut, userId: userId, category: cat, hotelsData: categories),
     );
   }
 }
