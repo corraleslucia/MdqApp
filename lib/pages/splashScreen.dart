@@ -4,6 +4,7 @@ import 'package:mdq/pages/root_page.dart';
 import 'package:mdq/services/authentication.dart';
 
 
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -27,18 +28,18 @@ class _SplashScreenState extends State<SplashScreen> {
   void _onShowLogin() {
     if(mounted){
       Navigator.of(context).pushReplacement(RootPage.route());
-//      new RootPage(auth: new Auth());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.blue[600],
+      color: Colors.orange[600],
       child: Column(
         children: <Widget>[
           SizedBox(height: 100.0,),
           Flexible(
+
             flex: 2,
             child: SafeArea(
               child: FractionallySizedBox(

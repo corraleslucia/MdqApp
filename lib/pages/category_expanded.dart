@@ -3,50 +3,46 @@ import 'package:mdq/models/category.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
-import 'package:mdq/pages/category_expanded.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.auth, this.userId, this.onSignedOut})
+class CategoryExpanded extends StatefulWidget {
+  CategoryExpanded({Key key, this.auth, this.userId, this.onSignedOut, this.category, this.hotelsData})
       : super(key: key);
 
   final BaseAuth auth;
   final VoidCallback onSignedOut;
   final String userId;
+  final Category category;
+  List hotelsData;
 
   @override
-  State<StatefulWidget> createState() => new _HomePageState();
+  State<StatefulWidget> createState() => new _CategoryExpandedState();
+
+  static Route<dynamic> route(Category cat, List categories) {
+    return MaterialPageRoute(
+      builder: (context) => CategoryExpanded(auth: new Auth(),category: cat, hotelsData: categories),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class _CategoryExpandedState extends State<CategoryExpanded> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _textEditingController = TextEditingController();
 
-  Map data;
-  List dataList;
-  Category category;
+//  Map data;
+//  List hotelsData;
 
-  List<Category> categories;
+//  List<Category> categories;
   bool _isEmailVerified = false;
   List<ListTile> elements = new List();
   @override
   void initState() {
     super.initState();
-    categories = new List();
-    categories.add(new Category("Hoteles", "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar", "12345678901234567890123456789012", "POST"));
-    categories.add(new Category("Gastronomia", "", "", ""));
-    categories.add(new Category("Museos", "", "", ""));
-    categories.add(new Category("Playas", "", "", ""));
-    categories.add(new Category("Transportes", "", "", ""));
-    categories.add(new Category("Lugares", "", "", ""));
-    categories.add(new Category("Inmobiliarias", "", "", ""));
-    categories.add(new Category("Eventos", "", "", ""));
-    categories.add(new Category("Congresos", "", "", ""));
-    categories.add(new Category("Agencias de viajes", "", "", ""));
-    this.dataList = new List();
+//    this.hotelsData = new List();
+//    this.getCateogorias();
 
     _checkEmailVerification();
   }
@@ -131,16 +127,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-//      appBar: new AppBar(
-//        title: new Text('MDQ APP'),
-//        actions: <Widget>[
-//          new FlatButton(
-//              child: new Text('Logout',
-//              style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-//              onPressed: _signOut)
-//        ],
-//      ),
-//      body: getListView(),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBarCustom(
@@ -151,7 +137,7 @@ class _HomePageState extends State<HomePage> {
 //              tittle: "Mdq App",
               actions: <Widget>[
                 new Container(
-                  child: OutlineButton(
+                    child: OutlineButton(
                       child: new Text(
                           'Logout',
                           style: new TextStyle(
@@ -161,17 +147,22 @@ class _HomePageState extends State<HomePage> {
                       ),
                       onPressed: _signOut,
                       borderSide: BorderSide(color: Colors.black, width: .5, style: BorderStyle.solid),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0,10 , 10, 10)
+                    ),
+                    margin: EdgeInsets.fromLTRB(0,10 , 10, 10)
                 ),
               ],
             ),
             SliverFixedExtentList(
               itemExtent: 70,
               delegate: SliverChildBuilderDelegate((BuildContext context, int i){
-                return _buildRow(categories[i].name, i);
+
+                  return _buildRow(widget.hotelsData[i]["Nombre"]);
+
               },
-              childCount: categories.length,
+                childCount:widget.hotelsData == null
+                    ? 0
+                    : widget.hotelsData.length,
+
 
               ),
             ),
@@ -179,35 +170,11 @@ class _HomePageState extends State<HomePage> {
         )
     );
   }
-  var body = json.encode({
-    "Token": "12345678901234567890123456789012",
-    "PagNumero": "",
-    "RegsXPag": "",
-    "LatCentro": "-38.0003561526665",
-    "LongCentro": "-57.5495535981007",
-    "DistCentro": "10000",
-    "IdCategoria": "",
-    "IdZona": "",
-    "IdServicioAlojamiento": "",
-    "Nombre": ""
-  });
-
-  Future<String> getCateogorias() async {
-
-    // crear el body que iria segun la peticion q desee buscar
-
-    var response = await http.post(this.category.url,
-        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-        body: body);
-
-    var data = json.decode(response.body);
-    dataList = data[this.category.name]; // guardo toda la data de "Hoteles"
-  }
 
 
 
-  Widget _buildRow(String t, int i){
-       return Card(
+  Widget _buildRow(String t){
+    return Card(
         color: Colors.white,
         margin: EdgeInsets.fromLTRB(20,10,20,0),
         elevation: 10,
@@ -215,27 +182,47 @@ class _HomePageState extends State<HomePage> {
           height: 100.0,
           child: InkWell(
             splashColor: Colors.lightBlueAccent,
-            onTap: () async {
-              this.category = categories[i];
-              await this.getCateogorias();
-              await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList));
+            onTap: () =>
+            {
             },
             child: ListTile(
               title: Text(
                   t,
                   style: TextStyle(
-                      fontSize: 20,
+                    fontSize: 14,
                   )),
-              trailing: Icon(Icons.beach_access),
+              trailing: Icon(Icons.hotel),
               contentPadding: EdgeInsets.fromLTRB(20,0,20,0),
             ),
           ),
         )
-      );
+    );
 
-
-
-          
   }
+
+//  var body = json.encode({
+//    "Token": "12345678901234567890123456789012",
+//    "PagNumero": "",
+//    "RegsXPag": "",
+//    "LatCentro": "-38.0003561526665",
+//    "LongCentro": "-57.5495535981007",
+//    "DistCentro": "10000",
+//    "IdCategoria": "",
+//    "IdZona": "",
+//    "IdServicioAlojamiento": "",
+//    "Nombre": ""
+//  });
+//
+//  Future<String> getCateogorias() async {
+//
+//    // crear el body que iria segun la peticion q desee buscar
+//
+//    var response = await http.post(widget.category.url,
+//        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+//        body: body);
+//
+//    var data = json.decode(response.body);
+//    hotelsData = data[widget.category.name]; // guardo toda la data de "Hoteles"
+//  }
 
 }
