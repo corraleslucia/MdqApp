@@ -19,11 +19,21 @@ class CategoryExpanded extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _CategoryExpandedState();
 
-//  static Route<dynamic> route(Key key, BaseAuth auth, String userId, VoidCallback onSignedOut, Category cat, List categories) {
+
+  static Route<dynamic> route(Key key, BaseAuth auth, String userId, VoidCallback onSignedOut, Category cat, List categories) {
+    return MaterialPageRoute(
+      builder: (context) => CategoryExpanded(key: key, auth: auth, category: cat, hotelsData: categories, onSignedOut: onSignedOut, userId: userId,),
+    );
+  }
+
+  // CONFICLTO EN MERGE COMENTADO: LO DEJO POR LAS DUDAS.
+
+//  static Route<dynamic> route(Category cat, List categories, BaseAuth auth, VoidCallback onSignedOut, String userId) {
 //    return MaterialPageRoute(
-//      builder: (context) => CategoryExpanded(key: key, auth: auth, category: cat, hotelsData: categories, onSignedOut: onSignedOut, userId: userId,),
+//      builder: (context) => CategoryExpanded(auth: auth, onSignedOut: onSignedOut, userId: userId, category: cat, hotelsData: categories),
 //    );
 //  }
+
 }
 
 class _CategoryExpandedState extends State<CategoryExpanded> {
@@ -185,7 +195,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
         child: Container(
           height: 100.0,
           child: InkWell(
-            splashColor: Colors.lightBlueAccent,
+            splashColor: Colors.deepOrange,
             onTap: () =>
             {
 

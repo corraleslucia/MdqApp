@@ -222,12 +222,18 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: 100.0,
           child: InkWell(
-            splashColor: Colors.lightBlueAccent,
+            splashColor: Colors.deepOrange,
             onTap: () async {
               this.category = categories[i];
               await this.getCateogorias();
+
+
               //await Navigator.of(context).pushReplacement(CategoryExpanded.route(widget.key, widget.auth,widget.userId, widget.onSignedOut, categories[i], dataList));
               Navigator.of(context).pushReplacement(RootPage.route("expanded", categories[i], dataList));
+
+              // CONFLICTO MERGE: Ya no es necesario rootear a categoryExpanded. ruteo a rootPage y esa devuelve una categoryExpanded.
+              //await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList, this.widget.auth, this.widget.onSignedOut, this.widget.userId));
+
             },
             child: ListTile(
               title: Text(
