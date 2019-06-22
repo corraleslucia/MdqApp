@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mdq/models/category.dart';
+import 'package:mdq/pages/root_page.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
@@ -18,6 +19,13 @@ class HomePage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => new _HomePageState();
+
+//  static Route<dynamic> route(Key key, BaseAuth auth, String userId, VoidCallback onSignedOut) {
+//    return MaterialPageRoute(
+//      builder: (context) => HomePage(key: key, auth: auth, onSignedOut: onSignedOut, userId: userId),
+//    );
+//  }
+
 }
 
 class _HomePageState extends State<HomePage> {
@@ -218,7 +226,8 @@ class _HomePageState extends State<HomePage> {
             onTap: () async {
               this.category = categories[i];
               await this.getCateogorias();
-              await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList));
+              //await Navigator.of(context).pushReplacement(CategoryExpanded.route(widget.key, widget.auth,widget.userId, widget.onSignedOut, categories[i], dataList));
+              Navigator.of(context).pushReplacement(RootPage.route("expanded", categories[i], dataList));
             },
             child: ListTile(
               title: Text(

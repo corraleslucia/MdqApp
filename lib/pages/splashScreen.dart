@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mdq/pages/root_page.dart';
-import 'package:mdq/services/authentication.dart';
-
 
 
 class SplashScreen extends StatefulWidget {
@@ -27,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _onShowLogin() {
     if(mounted){
-      Navigator.of(context).pushReplacement(RootPage.route());
+      Navigator.of(context).pushReplacement(RootPage.route("home", null, null));
     }
   }
 

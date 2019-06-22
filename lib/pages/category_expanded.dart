@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mdq/models/category.dart';
+import 'package:mdq/pages/root_page.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:io';
+import 'home_categories.dart';
 
 class CategoryExpanded extends StatefulWidget {
   CategoryExpanded({Key key, this.auth, this.userId, this.onSignedOut, this.category, this.hotelsData})
@@ -15,16 +14,16 @@ class CategoryExpanded extends StatefulWidget {
   final VoidCallback onSignedOut;
   final String userId;
   final Category category;
-  List hotelsData;
+  final List hotelsData;
 
   @override
   State<StatefulWidget> createState() => new _CategoryExpandedState();
 
-  static Route<dynamic> route(Category cat, List categories) {
-    return MaterialPageRoute(
-      builder: (context) => CategoryExpanded(auth: new Auth(),category: cat, hotelsData: categories),
-    );
-  }
+//  static Route<dynamic> route(Key key, BaseAuth auth, String userId, VoidCallback onSignedOut, Category cat, List categories) {
+//    return MaterialPageRoute(
+//      builder: (context) => CategoryExpanded(key: key, auth: auth, category: cat, hotelsData: categories, onSignedOut: onSignedOut, userId: userId,),
+//    );
+//  }
 }
 
 class _CategoryExpandedState extends State<CategoryExpanded> {
@@ -32,17 +31,12 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _textEditingController = TextEditingController();
 
-//  Map data;
-//  List hotelsData;
 
-//  List<Category> categories;
   bool _isEmailVerified = false;
   List<ListTile> elements = new List();
   @override
   void initState() {
     super.initState();
-//    this.hotelsData = new List();
-//    this.getCateogorias();
 
     _checkEmailVerification();
   }
@@ -116,6 +110,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
 
   _signOut() async {
     try {
+      print('sign out');
       await widget.auth.signOut();
       widget.onSignedOut();
     } catch (e) {
@@ -136,6 +131,15 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
               floating: false,
 //              tittle: "Mdq App",
               actions: <Widget>[
+                new Container(
+                  child: IconButton(
+                      icon: Icon(Icons.arrow_back_ios),
+                      onPressed:  () {
+                        //Navigator.of(context).pushReplacement(HomePage.route(widget.key, widget.auth, widget.userId, widget.onSignedOut));
+                        Navigator.of(context).pushReplacement(RootPage.route("home", null, null));
+                      }
+                  ),
+                ),
                 new Container(
                     child: OutlineButton(
                       child: new Text(
@@ -184,6 +188,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
             splashColor: Colors.lightBlueAccent,
             onTap: () =>
             {
+
             },
             child: ListTile(
               title: Text(

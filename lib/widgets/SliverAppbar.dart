@@ -33,6 +33,7 @@ class _SliverAppBarState extends State<SliverAppBarCustom> {
 //            ),
 //        ),
         centerTitle: false,
+
         titlePadding: EdgeInsets.fromLTRB(20, 0, 0, 90),
         background: Image.asset(
             widget.background_image,

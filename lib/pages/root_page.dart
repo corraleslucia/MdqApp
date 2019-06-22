@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:mdq/models/category.dart';
 import 'package:mdq/pages/login_signup_page.dart';
 import 'package:mdq/services/authentication.dart';
 //import 'package:mdq/pages/home_page.dart';
 import 'package:mdq/pages/home_categories.dart';
 
+import 'category_expanded.dart';
+
 class RootPage extends StatefulWidget {
-  RootPage({this.auth});
+  RootPage({this.auth, this.page, this.category, this.elements});
 
   final BaseAuth auth;
+  final String page;
+  final Category category;
+  final List elements;
 
   @override
   State<StatefulWidget> createState() => new _RootPageState();
 
-  static Route<dynamic> route() {
+  static Route<dynamic> route(String pageTo, Category cat, List elem) {
     return MaterialPageRoute(
-      builder: (context) => RootPage(auth: new Auth()),
+      builder: (context) => RootPage(auth: new Auth(), page: pageTo, category: cat, elements: elem),
     );
   }
 }
@@ -32,6 +38,7 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
+    print(widget.page);
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
@@ -85,11 +92,29 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return new HomePage(
-            userId: _userId,
-            auth: widget.auth,
-            onSignedOut: _onSignedOut,
-          );
+          switch (widget.page){
+            case "home":
+              return new HomePage(
+                userId: _userId,
+                auth: widget.auth,
+                onSignedOut: _onSignedOut,
+              );
+              break;
+            case "expanded":
+              return CategoryExpanded(
+                  userId: _userId,
+                  auth: widget.auth,
+                  onSignedOut: _onSignedOut,
+                  category: widget.category,
+                  hotelsData: widget.elements
+              );
+            default:
+              return new HomePage(
+                userId: _userId,
+                auth: widget.auth,
+                onSignedOut: _onSignedOut,
+              );
+          }
         } else return _buildWaitingScreen();
         break;
       default:
