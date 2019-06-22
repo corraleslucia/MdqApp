@@ -3,6 +3,7 @@ import 'package:mdq/models/category.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
+import 'package:mdq/pages/detail_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
@@ -182,9 +183,10 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
           height: 100.0,
           child: InkWell(
             splashColor: Colors.deepOrange,
-            onTap: () =>
-            {
-            },
+            onTap:() async {
+              await Navigator.of(context).pushReplacement(DetailPage.route('Hotel gaston', 'solis', 540, 38, 38, '223-58', 'a@a.com',
+                  this.widget.auth, this.widget.onSignedOut, this.widget.userId));
+          },
             child: ListTile(
               title: Text(
                   t,
