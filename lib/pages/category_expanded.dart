@@ -19,12 +19,13 @@ class CategoryExpanded extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _CategoryExpandedState();
 
+    // Ahora esta pagina no necesita un route directo.
 
-  static Route<dynamic> route(Key key, BaseAuth auth, String userId, VoidCallback onSignedOut, Category cat, List categories) {
-    return MaterialPageRoute(
-      builder: (context) => CategoryExpanded(key: key, auth: auth, category: cat, hotelsData: categories, onSignedOut: onSignedOut, userId: userId,),
-    );
-  }
+//  static Route<dynamic> route(Key key, BaseAuth auth, String userId, VoidCallback onSignedOut, Category cat, List categories) {
+//    return MaterialPageRoute(
+//      builder: (context) => CategoryExpanded(key: key, auth: auth, category: cat, hotelsData: categories, onSignedOut: onSignedOut, userId: userId,),
+//    );
+//  }
 
   // CONFICLTO EN MERGE COMENTADO: LO DEJO POR LAS DUDAS.
 
