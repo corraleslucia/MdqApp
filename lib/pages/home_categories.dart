@@ -36,16 +36,61 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     categories = new List();
-    categories.add(new Category("Hoteles", "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar", "12345678901234567890123456789012", "POST", Icons.hotel));
-    categories.add(new Category("Gastronomia", "", "", "", Icons.restaurant));
-    categories.add(new Category("Museos", "", "", "", Icons.account_balance));
-    categories.add(new Category("Playas", "", "", "", Icons.beach_access));
-    categories.add(new Category("Transportes", "", "", "", Icons.directions_bus));
-    categories.add(new Category("Lugares", "", "", "", Icons.place));
-    categories.add(new Category("Inmobiliarias", "", "", "", Icons.home));
-    categories.add(new Category("Eventos", "", "", "", Icons.event));
-    categories.add(new Category("Congresos", "", "", "", Icons.business));
-    categories.add(new Category("Agencias de viajes", "", "", "", Icons.airplanemode_active));
+    categories.add(new Category(
+        "Hoteles",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar",
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.hotel));
+    /*categories.add(new Category(
+        "Gastronomia",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Gastronomia/Buscar",  // NO TRAE INFO
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.restaurant));
+    categories.add(new Category(
+        "Museos",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Museo/Buscar",  // NO TRAE INFO
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.account_balance));*/
+    categories.add(new Category(
+        "Playas",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Playa/Buscar",
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.beach_access));
+    categories.add(new Category(
+        "Transportes",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Transporte/Buscar",
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.directions_bus));
+    //categories.add(new Category("Lugares", "", "", "", Icons.place));
+    categories.add(new Category(
+        "Inmobiliarias",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Inmobiliaria/Buscar",
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.location_city));
+    categories.add(new Category(
+        "Eventos",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Evento/Buscar",
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.event));
+    categories.add(new Category(
+        "Salones",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Congreso/Buscar",
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.business));
+    categories.add(new Category(
+        "Agencias",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Agencia/Buscar",
+        "12345678901234567890123456789012",
+        "POST",
+        Icons.airplanemode_active));
     this.dataList = new List();
 
     _checkEmailVerification();
@@ -70,7 +115,8 @@ class _HomePageState extends State<HomePage> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Verifique su cuenta"),
-          content: new Text("Por favor verifica tu cuenta en el link enviado al email"),
+          content: new Text(
+              "Por favor verifica tu cuenta en el link enviado al email"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Reenviar link"),
@@ -127,7 +173,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -142,44 +187,40 @@ class _HomePageState extends State<HomePage> {
 //      ),
 //      body: getListView(),
         body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBarCustom(
-              background_image: 'assets/mdpAppbar2.jpg',
-              pinned: true,
-              snap: false,
-              floating: false,
+      slivers: <Widget>[
+        SliverAppBarCustom(
+          background_image: 'assets/mdpAppbar2.jpg',
+          pinned: true,
+          snap: false,
+          floating: false,
 //              tittle: "Mdq App",
-              actions: <Widget>[
-                new Container(
-                  child: OutlineButton(
-                      child: new Text(
-                          'Logout',
-                          style: new TextStyle(
-                              fontSize: 17.0,
-                              color: Colors.white
-                          )
-                      ),
-                      onPressed: _signOut,
-                      borderSide: BorderSide(color: Colors.black, width: .5, style: BorderStyle.solid),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0,10 , 10, 10)
+          actions: <Widget>[
+            new Container(
+                child: OutlineButton(
+                  child: new Text('Logout',
+                      style:
+                          new TextStyle(fontSize: 17.0, color: Colors.white)),
+                  onPressed: _signOut,
+                  borderSide: BorderSide(
+                      color: Colors.black, width: .5, style: BorderStyle.solid),
                 ),
-              ],
-            ),
-            SliverFixedExtentList(
-              itemExtent: 70,
-              delegate: SliverChildBuilderDelegate((BuildContext context, int i){
-                return _buildRow(categories[i].name, i);
-              },
-              childCount: categories.length,
-
-              ),
-            ),
+                margin: EdgeInsets.fromLTRB(0, 10, 10, 10)),
           ],
-        )
-    );
+        ),
+        SliverFixedExtentList(
+          itemExtent: 70,
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int i) {
+              return _buildRow(categories[i].name, i);
+            },
+            childCount: categories.length,
+          ),
+        ),
+      ],
+    ));
   }
-  var body = json.encode({
+
+  var bodyHotel = json.encode({
     "Token": "12345678901234567890123456789012",
     "PagNumero": "",
     "RegsXPag": "",
@@ -192,9 +233,110 @@ class _HomePageState extends State<HomePage> {
     "Nombre": ""
   });
 
-  Future<String> getCateogorias() async {
+  var bodyInmobiliaria = json.encode({
+    "Token": "12345678901234567890123456789012",
+    "PagNumero": "",
+    "RegsXPag": "",
+    "LatCentro": "-38.0003561526665",
+    "LongCentro": "-57.5495535981007",
+    "DistCentro": "10000",
+    "IdZonaOperacion": "",
+    "SoloConAlquilerTuristico": "false",
+    "Nombre": ""
+  });
 
-    // crear el body que iria segun la peticion q desee buscar
+  var bodyAgencia = json.encode({
+    "Token": "12345678901234567890123456789012",
+    "PagNumero": "",
+    "RegsXPag": "",
+    "LatCentro": "-38.0003561526665",
+    "LongCentro": "-57.5495535981007",
+    "DistCentro": "10000",
+    "IdCategoria": "",
+    "IdTipoOperacion": "",
+    "Nombre": ""
+  });
+
+  var bodyTransporte = json.encode({
+    "Token": "12345678901234567890123456789012",
+    "PagNumero": "",
+    "RegsXPag": "",
+    "LatCentro": "-38.0003561526665",
+    "LongCentro": "-57.5495535981007",
+    "DistCentro": "10000",
+    "IdTipoMedio": "",
+    "IdDestino": "",
+    "Nombre": ""
+  });
+
+  var bodyCongreso = json.encode({
+    "Token": "12345678901234567890123456789012",
+    "PagNumero": "",
+    "RegsXPag": "",
+    "LatCentro": "-38.0003561526665",
+    "LongCentro": "-57.5495535981007",
+    "DistCentro": "10000",
+    "Capacidad": "",
+    "Nombre": ""
+  });
+
+  var bodyPlaya = json.encode({
+    "Token": "12345678901234567890123456789012",
+    "PagNumero": "",
+    "RegsXPag": "",
+    "LatCentro": "-38.0003561526665",
+    "LongCentro": "-57.5495535981007",
+    "DistCentro": "10000",
+    "IdZona": "",
+    "IdAccesibilidad": "",
+    "Nombre": ""
+  });
+
+  var bodyEvento = json.encode({
+    "Token" : "12345678901234567890123456789012",
+    "PagNumero":"",
+    "RegsXPag" :"",
+    "IdCategoria" :"",
+    "IdSubCategoria" :"",
+    "FechaDesde" :"20190622",
+    "FechaHasta" :"20190822",
+    "Nombre":""
+  });
+
+  Future<String> getRubro(String rubro) async {
+    //var response;
+
+    var body;
+
+    switch (rubro) {
+      case "Hoteles":
+        body = bodyHotel;
+        break;
+
+      case "Inmobiliarias":
+        body = bodyInmobiliaria;
+        break;
+
+      case "Agencias":
+        body = bodyAgencia;
+        break;
+
+      case "Transportes":
+        body = bodyTransporte;
+        break;
+
+      case "Salones":
+        body = bodyCongreso;
+        break;
+
+      case "Playas":
+        body = bodyPlaya;
+        break;
+
+      case "Eventos":
+        body = bodyEvento;
+        break;
+    }
 
     var response = await http.post(this.category.url,
         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
@@ -205,11 +347,10 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-
-  Widget _buildRow(String t, int i){
-       return Card(
+  Widget _buildRow(String t, int i) {
+    return Card(
         color: Colors.white,
-        margin: EdgeInsets.fromLTRB(20,10,20,0),
+        margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
         elevation: 10,
         child: Container(
           height: 100.0,
@@ -217,25 +358,26 @@ class _HomePageState extends State<HomePage> {
             splashColor: Colors.deepOrange,
             onTap: () async {
               this.category = categories[i];
-              await this.getCateogorias();
-              await Navigator.of(context).pushReplacement(CategoryExpanded.route(categories[i], dataList, this.widget.auth, this.widget.onSignedOut, this.widget.userId));
+
+              await this.getRubro(this.category.name);
+
+              await Navigator.of(context).pushReplacement(
+                  CategoryExpanded.route(
+                      categories[i],
+                      dataList,
+                      this.widget.auth,
+                      this.widget.onSignedOut,
+                      this.widget.userId));
             },
             child: ListTile(
-              title: Text(
-                  t,
+              title: Text(t,
                   style: TextStyle(
-                      fontSize: 20,
+                    fontSize: 20,
                   )),
               trailing: Icon(categories[i].icono),
-              contentPadding: EdgeInsets.fromLTRB(20,0,20,0),
+              contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             ),
           ),
-        )
-      );
-
-
-
-          
+        ));
   }
-
 }
