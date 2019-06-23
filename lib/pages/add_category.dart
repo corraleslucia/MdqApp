@@ -32,7 +32,6 @@ class AddCategoryDialog extends StatefulWidget {
 }
 
 class _AddCategoryDialogState extends State<AddCategoryDialog> {
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
   bool _isEmailVerified = false;
   final _formAddCategoryKey = GlobalKey<FormState>();
   String _name;
@@ -224,6 +223,9 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
             key: _formAddCategoryKey,
             child: Column(
               children: <Widget>[
+
+                SizedBox(height: 15.0,),
+                
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Category name',
@@ -239,6 +241,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                   },
                   onSaved: (value) => setState(() => _name = value),
                 ),
+
+                SizedBox(height: 15.0,),
 
                 TextFormField(
                   decoration: InputDecoration(
@@ -256,6 +260,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                   onSaved: (value) => setState(() => _url = value),
                 ),
 
+                SizedBox(height: 15.0,),
+
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Category API token',
@@ -271,6 +277,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                   },
                   onSaved: (value) => setState(() => _token = value),
                 ),
+
+                SizedBox(height: 15.0,),
 
                 TextFormField(
                   decoration: InputDecoration(
@@ -289,6 +297,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                   onSaved: (value) => setState(() => _method = value),
                 ),
 
+                SizedBox(height: 15.0,),
+
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Category Icon',
@@ -300,7 +310,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                       ? widget.icon
                       : "",
                   validator: (value) {
-                    return validateName(value);
+                    return validateIcon(value);
                   },
                   onSaved: (value) => setState(() => _icon = value),
                 ),

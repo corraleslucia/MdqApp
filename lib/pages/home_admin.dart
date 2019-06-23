@@ -111,8 +111,10 @@ class _HomePageAdminState extends State<HomePageAdmin> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('MDQ APP - ADMIN',
-        style: TextStyle(color: Colors.white),),
+        title: new Text(
+          'MDQ APP - ADMIN',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: <Widget>[
           new FlatButton(
               child: new Text('Logout',
@@ -131,7 +133,10 @@ class _HomePageAdminState extends State<HomePageAdmin> {
       onPressed: () {
         _navigateToAddCategory();
       },
-      child: Icon(Icons.add,color: Colors.white,),
+      child: Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
     );
   }
 
@@ -210,6 +215,10 @@ class _HomePageAdminState extends State<HomePageAdmin> {
                           builder: (context) => AddCategoryDialog(
                                 docId: data.documentID,
                                 name: category.name,
+                                url: category.url,
+                                token: category.token,
+                                method: category.method,
+                                icon: category.icon,
                               ),
                           fullscreenDialog: true,
                         ),
