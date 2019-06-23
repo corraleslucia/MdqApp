@@ -226,8 +226,6 @@ class _HomePageState extends State<HomePage> {
             onTap: () async {
               this.category = categories[i];
               await this.getCateogorias();
-
-
               //await Navigator.of(context).pushReplacement(CategoryExpanded.route(widget.key, widget.auth,widget.userId, widget.onSignedOut, categories[i], dataList));
               Navigator.of(context).pushReplacement(RootPage.route("expanded", categories[i], dataList));
 
