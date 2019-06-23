@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mdq/models/category.dart';
+import 'package:mdq/pages/detail_page.dart';
 import 'package:mdq/pages/login_signup_page.dart';
 import 'package:mdq/services/authentication.dart';
-//import 'package:mdq/pages/home_page.dart';
 import 'package:mdq/pages/home_categories.dart';
 
 import 'category_expanded.dart';
@@ -108,6 +108,20 @@ class _RootPageState extends State<RootPage> {
                   category: widget.category,
                   hotelsData: widget.elements
               );
+            case "detail":
+              return DetailPage(
+                userId: _userId,
+                auth: widget.auth,
+                onSignedOut: _onSignedOut,
+                latitude: 38,
+                longitude: 38,
+                mail: "hotelmalada@gmail.com",
+                name: "Hotel Malada",
+                phoneNumber: "+549223004466",
+                street: "Av. Pedro Luro",
+                streetNumber: 5669,
+              );
+              break;
             default:
               return new HomePage(
                 userId: _userId,

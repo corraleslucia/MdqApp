@@ -4,7 +4,8 @@ import 'package:mdq/pages/root_page.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
-import 'home_categories.dart';
+import 'package:mdq/pages/detail_page.dart';
+
 
 class CategoryExpanded extends StatefulWidget {
   CategoryExpanded({Key key, this.auth, this.userId, this.onSignedOut, this.category, this.hotelsData})
@@ -19,28 +20,11 @@ class CategoryExpanded extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _CategoryExpandedState();
 
-    // Ahora esta pagina no necesita un route directo.
-
-//  static Route<dynamic> route(Key key, BaseAuth auth, String userId, VoidCallback onSignedOut, Category cat, List categories) {
-//    return MaterialPageRoute(
-//      builder: (context) => CategoryExpanded(key: key, auth: auth, category: cat, hotelsData: categories, onSignedOut: onSignedOut, userId: userId,),
-//    );
-//  }
-
-  // CONFICLTO EN MERGE COMENTADO: LO DEJO POR LAS DUDAS.
-
-//  static Route<dynamic> route(Category cat, List categories, BaseAuth auth, VoidCallback onSignedOut, String userId) {
-//    return MaterialPageRoute(
-//      builder: (context) => CategoryExpanded(auth: auth, onSignedOut: onSignedOut, userId: userId, category: cat, hotelsData: categories),
-//    );
-//  }
-
 }
 
 class _CategoryExpandedState extends State<CategoryExpanded> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final _textEditingController = TextEditingController();
 
 
   bool _isEmailVerified = false;
@@ -139,13 +123,11 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
               pinned: true,
               snap: false,
               floating: false,
-//              tittle: "Mdq App",
               actions: <Widget>[
                 new Container(
                   child: IconButton(
                       icon: Icon(Icons.arrow_back_ios),
                       onPressed:  () {
-                        //Navigator.of(context).pushReplacement(HomePage.route(widget.key, widget.auth, widget.userId, widget.onSignedOut));
                         Navigator.of(context).pushReplacement(RootPage.route("home", null, null));
                       }
                   ),
@@ -196,10 +178,11 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
           height: 100.0,
           child: InkWell(
             splashColor: Colors.deepOrange,
-            onTap: () =>
-            {
-
-            },
+            onTap:() async {
+//              await Navigator.of(context).pushReplacement(DetailPage.route('Hotel gaston', 'solis', 540, 38, 38, '223-58', 'a@a.com',
+//                  this.widget.auth, this.widget.onSignedOut, this.widget.userId));
+              Navigator.of(context).pushReplacement(RootPage.route("detail", null, null));
+          },
             child: ListTile(
               title: Text(
                   t,
