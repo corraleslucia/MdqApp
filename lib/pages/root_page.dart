@@ -4,6 +4,7 @@ import 'package:mdq/pages/login_signup_page.dart';
 import 'package:mdq/services/authentication.dart';
 //import 'package:mdq/pages/home_page.dart';
 import 'package:mdq/pages/home_categories.dart';
+import 'package:mdq/pages/home_admin.dart';
 
 import 'category_expanded.dart';
 
@@ -66,6 +67,7 @@ class _RootPageState extends State<RootPage> {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
       _userId = "";
+      Navigator.of(context).pushReplacement(RootPage.route("home", null, null));
     });
   }
 
@@ -91,6 +93,13 @@ class _RootPageState extends State<RootPage> {
         );
         break;
       case AuthStatus.LOGGED_IN:
+        if(_userId.length > 0 && _userId == "J52c3lPyAvZSASo80BzEoJBwJ3J3"){
+          return new HomePageAdmin(
+                userId: _userId,
+                auth: widget.auth,
+                onSignedOut: _onSignedOut,
+              );
+        }
         if (_userId.length > 0 && _userId != null) {
           switch (widget.page){
             case "home":
