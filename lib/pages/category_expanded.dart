@@ -121,7 +121,6 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
 
   _signOut() async {
     try {
-      print('sign out');
       await widget.auth.signOut();
       widget.onSignedOut();
     } catch (e) {
@@ -215,30 +214,5 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
     );
 
   }
-
-//  var body = json.encode({
-//    "Token": "12345678901234567890123456789012",
-//    "PagNumero": "",
-//    "RegsXPag": "",
-//    "LatCentro": "-38.0003561526665",
-//    "LongCentro": "-57.5495535981007",
-//    "DistCentro": "10000",
-//    "IdCategoria": "",
-//    "IdZona": "",
-//    "IdServicioAlojamiento": "",
-//    "Nombre": ""
-//  });
-//
-//  Future<String> getCateogorias() async {
-//
-//    // crear el body que iria segun la peticion q desee buscar
-//
-//    var response = await http.post(widget.category.url,
-//        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-//        body: body);
-//
-//    var data = json.decode(response.body);
-//    hotelsData = data[widget.category.name]; // guardo toda la data de "Hoteles"
-//  }
 
 }
