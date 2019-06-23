@@ -1,0 +1,36 @@
+	"Hoteles",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar",
+        "12345678901234567890123456789012",
+        
+       
+        "Gastronomia",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Gastronomia/Buscar",  // NO TRAE INFO
+        "12345678901234567890123456789012",
+          
+        "Museos",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Museo/Buscar",  // NO TRAE INFO
+        "12345678901234567890123456789012",
+                  
+        "Playas",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Playa/Buscar",
+        "12345678901234567890123456789012",
+            
+        "Transportes",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Transporte/Buscar",
+        "12345678901234567890123456789012",
+            
+        "Inmobiliarias",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Inmobiliaria/Buscar",
+        "12345678901234567890123456789012",
+           
+        "Eventos",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Evento/Buscar",
+        "12345678901234567890123456789012",
+           
+        "Salones",  (congresos)
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Congreso/Buscar",
+        "12345678901234567890123456789012",
+         
+        "Agencias",
+        "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Agencia/Buscar",
+        "12345678901234567890123456789012",
