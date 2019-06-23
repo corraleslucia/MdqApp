@@ -4,7 +4,6 @@ import 'package:mdq/pages/root_page.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
-import 'package:mdq/pages/category_expanded.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
@@ -184,7 +183,6 @@ class _HomePageState extends State<HomePage> {
           pinned: true,
           snap: false,
           floating: false,
-//              tittle: "Mdq App",
           actions: <Widget>[
             new Container(
                 child: OutlineButton(
@@ -361,6 +359,8 @@ class _HomePageState extends State<HomePage> {
               contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             ),
           ),
+
         ));
+
   }
 }
