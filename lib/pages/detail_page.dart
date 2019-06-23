@@ -4,9 +4,10 @@ import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'package:mdq/widgets/detail_item.dart';
+
 
 class DetailPage extends StatelessWidget {
   DetailPage(
@@ -24,6 +25,7 @@ class DetailPage extends StatelessWidget {
   final double longitude;
   final String phoneNumber;
   final String mail;
+
 
 
 
@@ -134,7 +136,7 @@ class DetailPage extends StatelessWidget {
               ],
             ),
 
-            Row(
+          Row(
               children: <Widget>[
                 new Container(
                   child: new Icon(
@@ -159,6 +161,20 @@ class DetailPage extends StatelessWidget {
                 ),
               ],
             ),
+        Expanded(
+          child: Container(
+            //height: 300,
+            width: MediaQuery.of(context).size.width,
+            child: GoogleMap(
+
+              onMapCreated: (GoogleMapController controller) {
+                  //CameraPosition(target: LatLng(26.8206, 30.8025));
+              },
+            ),
+          ),
+
+        )
+
 
           ],
         ),
@@ -254,6 +270,6 @@ class DetailPage extends StatelessWidget {
 
   */
 
-//desde aca cambiar
+
 
 
