@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mdq/models/category.dart';
 import 'package:mdq/pages/root_page.dart';
 import 'package:mdq/services/authentication.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
-import 'package:mdq/pages/category_expanded.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:mdq/firebase/firebase_api.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.onSignedOut})
@@ -29,13 +30,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _textEditingController = TextEditingController();
+
 
   Map data;
   List dataList;
   Category category;
+
+  final myIcons = <String, IconData>{
+    'hotel': Icons.hotel,
+    'restaurant': Icons.restaurant,
+    'museo': Icons.account_balance,
+    'playa': Icons.beach_access,
+    'transporte': Icons.directions_bus,
+    'lugar': Icons.place,
+    'inmobiliaria': Icons.home,
+    'evento': Icons.event,
+    'congreso': Icons.business,
+    'agencia': Icons.airplanemode_active
+  };
 
   List<Category> categories;
   bool _isEmailVerified = false;
@@ -44,17 +58,50 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     categories = new List();
-    categories.add(new Category("Hoteles", "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar", "12345678901234567890123456789012", "POST", Icons.hotel));
-    categories.add(new Category("Gastronomia", "", "", "", Icons.restaurant));
-    categories.add(new Category("Museos", "", "", "", Icons.account_balance));
-    categories.add(new Category("Playas", "", "", "", Icons.beach_access));
-    categories.add(new Category("Transportes", "", "", "", Icons.directions_bus));
-    categories.add(new Category("Lugares", "", "", "", Icons.place));
-    categories.add(new Category("Inmobiliarias", "", "", "", Icons.home));
-    categories.add(new Category("Eventos", "", "", "", Icons.event));
-    categories.add(new Category("Congresos", "", "", "", Icons.business));
-    categories.add(new Category("Agencias de viajes", "", "", "", Icons.airplanemode_active));
-    this.dataList = new List();
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[0]['name'], data.documents[0]['url'], data.documents[0]['token'],
+            data.documents[0]['method'], myIcons[data.documents[0]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[1]['name'], data.documents[1]['url'], data.documents[1]['token'],
+            data.documents[1]['method'], myIcons[data.documents[1]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[2]['name'], data.documents[2]['url'], data.documents[2]['token'],
+            data.documents[2]['method'], myIcons[data.documents[2]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[3]['name'], data.documents[3]['url'], data.documents[3]['token'],
+            data.documents[3]['method'], myIcons[data.documents[3]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[4]['name'], data.documents[4]['url'], data.documents[4]['token'],
+            data.documents[4]['method'], myIcons[data.documents[4]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[5]['name'], data.documents[5]['url'], data.documents[5]['token'],
+            data.documents[5]['method'], myIcons[data.documents[5]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[6]['name'], data.documents[6]['url'], data.documents[6]['token'],
+            data.documents[6]['method'], myIcons[data.documents[6]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[7]['name'], data.documents[7]['url'], data.documents[7]['token'],
+            data.documents[7]['method'], myIcons[data.documents[7]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[8]['name'], data.documents[8]['url'], data.documents[8]['token'],
+            data.documents[8]['method'], myIcons[data.documents[8]['icon']])));
+    FireBaseAPI.categoryStream.listen((data)=>
+        categories.add(new Category(data.documents[9]['name'].toString(), data.documents[9]['url'].toString(), data.documents[9]['token'].toString(),
+            data.documents[9]['method'].toString(), myIcons[data.documents[9]['icon'].toString()])));
+
+
+//    categories = new List();
+//    categories.add(new Category("Hoteles", "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar", "12345678901234567890123456789012", "POST", Icons.hotel));
+//    categories.add(new Category("Gastronomia", "", "", "", Icons.restaurant));
+//    categories.add(new Category("Museos", "", "", "", Icons.account_balance));
+//    categories.add(new Category("Playas", "", "", "", Icons.beach_access));
+//    categories.add(new Category("Transportes", "", "", "", Icons.directions_bus));
+//    categories.add(new Category("Lugares", "", "", "", Icons.place));
+//    categories.add(new Category("Inmobiliarias", "", "", "", Icons.home));
+//    categories.add(new Category("Eventos", "", "", "", Icons.event));
+//    categories.add(new Category("Congresos", "", "", "", Icons.business));
+//    categories.add(new Category("Agencias de viajes", "", "", "", Icons.airplanemode_active));
+//    this.dataList = new List();
 
     _checkEmailVerification();
   }
