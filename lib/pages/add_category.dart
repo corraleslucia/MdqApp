@@ -225,7 +225,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
               children: <Widget>[
 
                 SizedBox(height: 15.0,),
-                
+
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Category name',

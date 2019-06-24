@@ -38,57 +38,25 @@ class _HomePageState extends State<HomePage> {
   List dataList;
   Category category;
 
-  final myIcons = <String, IconData>{
-    'hotel': Icons.hotel,
-    'restaurant': Icons.restaurant,
-    'museo': Icons.account_balance,
-    'playa': Icons.beach_access,
-    'transporte': Icons.directions_bus,
-    'lugar': Icons.place,
-    'inmobiliaria': Icons.home,
-    'evento': Icons.event,
-    'congreso': Icons.business,
-    'agencia': Icons.airplanemode_active
-  };
-
-  List<Category> categories;
+//  final myIcons = <String, IconData>{
+//    'hotel': Icons.hotel,
+//    'restaurant': Icons.restaurant,
+//    'museo': Icons.account_balance,
+//    'playa': Icons.beach_access,
+//    'transporte': Icons.directions_bus,
+//    'lugar': Icons.place,
+//    'inmobiliaria': Icons.home,
+//    'evento': Icons.event,
+//    'congreso': Icons.business,
+//    'agencia': Icons.airplanemode_active
+//  };
+//
+  List<Category> categories = FireBaseAPI.getCategoriesList();
   bool _isEmailVerified = false;
-  List<ListTile> elements = new List();
+//  List<ListTile> elements = new List();
   @override
   void initState() {
     super.initState();
-    categories = new List();
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[0]['name'], data.documents[0]['url'], data.documents[0]['token'],
-            data.documents[0]['method'], myIcons[data.documents[0]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[1]['name'], data.documents[1]['url'], data.documents[1]['token'],
-            data.documents[1]['method'], myIcons[data.documents[1]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[2]['name'], data.documents[2]['url'], data.documents[2]['token'],
-            data.documents[2]['method'], myIcons[data.documents[2]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[3]['name'], data.documents[3]['url'], data.documents[3]['token'],
-            data.documents[3]['method'], myIcons[data.documents[3]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[4]['name'], data.documents[4]['url'], data.documents[4]['token'],
-            data.documents[4]['method'], myIcons[data.documents[4]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[5]['name'], data.documents[5]['url'], data.documents[5]['token'],
-            data.documents[5]['method'], myIcons[data.documents[5]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[6]['name'], data.documents[6]['url'], data.documents[6]['token'],
-            data.documents[6]['method'], myIcons[data.documents[6]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[7]['name'], data.documents[7]['url'], data.documents[7]['token'],
-            data.documents[7]['method'], myIcons[data.documents[7]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[8]['name'], data.documents[8]['url'], data.documents[8]['token'],
-            data.documents[8]['method'], myIcons[data.documents[8]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[9]['name'].toString(), data.documents[9]['url'].toString(), data.documents[9]['token'].toString(),
-            data.documents[9]['method'].toString(), myIcons[data.documents[9]['icon'].toString()])));
-
 
 //    categories = new List();
 //    categories.add(new Category("Hoteles", "http://turismomardelplata.gov.ar/WS20/TurismoWS.svc/Hotel/Buscar", "12345678901234567890123456789012", "POST", Icons.hotel));
@@ -251,7 +219,7 @@ class _HomePageState extends State<HomePage> {
 
     // crear el body que iria segun la peticion q desee buscar
 
-    var response = await http.post(this.category.url,
+    var response = await http.post(Uri.encodeFull(this.category.url),
         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
         body: body);
 
