@@ -26,7 +26,6 @@ class DetailPage extends StatefulWidget {
   final String phoneNumber;
   final String mail;
 
-
   static Route<dynamic> route(String name, String street, int sNumber,
       double lat, double lon, String pNumber, String mail,
       BaseAuth auth, VoidCallback onSignedOut, String userId) {
@@ -55,10 +54,19 @@ class DetailPage extends StatefulWidget {
 class _DetailPage extends State<DetailPage> {
 
   GoogleMapController mapController;
+  Set<Marker> markers = Set();
 
   void onMapCreated(controller) {
     setState(() {
       mapController = controller;
+
+      markers.add(
+        Marker(
+            markerId: MarkerId('HOTEL GASTON'),
+            position: LatLng(-38.0033, -57.5528),
+        )
+      );
+
     });
   }
 
@@ -178,13 +186,12 @@ class _DetailPage extends State<DetailPage> {
             ),
         new Expanded(
           child: GoogleMap(
-              //onMapCreated: onMapCreated,
-              initialCameraPosition: CameraPosition(target: LatLng(40.7128, -74.0060),
-                                                    zoom: 16.0, bearing: 192.8334901395799,tilt: 59.440717697143555,
-
+              onMapCreated: onMapCreated,
+              initialCameraPosition: CameraPosition(target: LatLng(widget.latitude, widget.longitude),
+                                                    zoom: 16.0,/* bearing: 192.8334901395799,tilt: 59.440717697143555,*/
               ),
               mapType: MapType.normal,
-
+              markers: markers,
             ),
 
 
