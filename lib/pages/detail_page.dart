@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   DetailPage(
       {Key key, this.auth, this.userId, this.onSignedOut, this.name, this.street, this.streetNumber,
         this.latitude, this.longitude, this.phoneNumber, this.mail})
@@ -25,8 +25,6 @@ class DetailPage extends StatelessWidget {
   final double longitude;
   final String phoneNumber;
   final String mail;
-
-
 
 
   static Route<dynamic> route(String name, String street, int sNumber,
@@ -47,6 +45,23 @@ class DetailPage extends StatelessWidget {
             mail: mail,),
     );
   }
+
+  @override
+  State<StatefulWidget> createState() => new _DetailPage();
+
+}
+
+
+class _DetailPage extends State<DetailPage> {
+
+  GoogleMapController mapController;
+
+  void onMapCreated(controller) {
+    setState(() {
+      mapController = controller;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +92,7 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.name,
+                    child: new Text( widget.name,
                           style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                           ),
                     ),
@@ -103,7 +118,7 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.street + this.streetNumber.toString(),
+                    child: new Text( widget.street + widget.streetNumber.toString(),
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
                   ),
@@ -128,7 +143,7 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.phoneNumber.toString(),
+                    child: new Text( widget.phoneNumber.toString(),
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
                   ),
@@ -154,34 +169,36 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.mail,
+                    child: new Text( widget.mail,
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
                   ),
                 ),
               ],
             ),
-        Expanded(
-          child: Container(
-            //height: 300,
-            width: MediaQuery.of(context).size.width,
-            child: GoogleMap(
+        new Expanded(
+          child: GoogleMap(
+              //onMapCreated: onMapCreated,
+              initialCameraPosition: CameraPosition(target: LatLng(40.7128, -74.0060),
+                                                    zoom: 16.0, bearing: 192.8334901395799,tilt: 59.440717697143555,
 
-              onMapCreated: (GoogleMapController controller) {
-                  //CameraPosition(target: LatLng(26.8206, 30.8025));
-              },
+              ),
+              mapType: MapType.normal,
+
             ),
-          ),
-
-        )
 
 
+
+        ),
           ],
         ),
       ),
     );
   }
+
 }
+
+
 
 /*
   bool _isEmailVerified = false;
@@ -269,6 +286,11 @@ class DetailPage extends StatelessWidget {
   }
 
   */
+
+
+
+
+
 
 
 
