@@ -20,26 +20,6 @@ class DetailPage extends StatefulWidget {
   final String phoneNumber;
   final String mail;
 
-//  static Route<dynamic> route(String name, String street, int sNumber,
-//      double lat, double lon, String pNumber, String mail,
-//      BaseAuth auth, VoidCallback onSignedOut, String userId) {
-//
-//    return MaterialPageRoute(
-//      builder: (context) =>
-//          DetailPage(
-//            auth: auth,
-//            onSignedOut: onSignedOut,
-//            userId: userId,
-//            name: name,
-//            street: street,
-//            streetNumber: sNumber,
-//            latitude: lat,
-//            longitude: lon,
-//            phoneNumber: pNumber,
-//            mail: mail,),
-//    );
-//  }
-
   @override
   State<StatefulWidget> createState() => new _DetailPage();
 }
@@ -55,8 +35,8 @@ class _DetailPage extends State<DetailPage> {
 
       markers.add(
         Marker(
-            markerId: MarkerId('HOTEL GASTON'),
-            position: LatLng(-38.0033, -57.5528),
+            markerId: MarkerId(widget.name),
+            position: LatLng(widget.latitude, widget.latitude),
         )
       );
 

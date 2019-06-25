@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:mdq/models/category.dart';
+import 'package:mdq/models/detailElement.dart';
 import 'package:mdq/pages/detail_page.dart';
 import 'package:mdq/pages/login_signup_page.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:mdq/pages/home_categories.dart';
 import 'package:mdq/pages/home_admin.dart';
-
 import 'category_expanded.dart';
 
 class RootPage extends StatefulWidget {
-  RootPage({this.auth, this.page, this.category, this.elements});
+  RootPage({this.auth, this.page, this.category, this.elements, this.indexToDetailPage});
 
-  final BaseAuth auth;
-  final String page;
-  final Category category;
-  final List elements;
+  final BaseAuth auth;  // sesion
+  final String page;    // pagina de redireccion
+  final Category category;  // categoria para lista detalle - expanded
+  final List elements;  // lista para lista detalle - expanded
+  final int indexToDetailPage; // indice del item seleccionado para mostrar detalles
 
   @override
   State<StatefulWidget> createState() => new _RootPageState();
 
-  static Route<dynamic> route(String pageTo, Category cat, List elem) {
+  static Route<dynamic> route(String pageTo, Category cat, List elem, int index) {
     return MaterialPageRoute(
-      builder: (context) => RootPage(auth: new Auth(), page: pageTo, category: cat, elements: elem),
+      builder: (context) => RootPage(auth: new Auth(), page: pageTo, category: cat, elements: elem, indexToDetailPage: index),
     );
   }
 }
@@ -67,7 +68,7 @@ class _RootPageState extends State<RootPage> {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
       _userId = "";
-      Navigator.of(context).pushReplacement(RootPage.route("home", null, null));
+      Navigator.of(context).pushReplacement(RootPage.route("home", null, null, null));
     });
   }
 
@@ -80,8 +81,17 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
+  DetailElement getElementDetails(String name, int index) {
+    DetailElement returnValue;
+    print("#################################-------#####");
+    print(name);
+    print(index);
+
+  }
+
   @override
   Widget build(BuildContext context) {
+
     switch (authStatus) {
       case AuthStatus.NOT_DETERMINED:
         return _buildWaitingScreen();
@@ -118,12 +128,13 @@ class _RootPageState extends State<RootPage> {
                   hotelsData: widget.elements
               );
             case "detail":
+              getElementDetails(widget.category.name, widget.indexToDetailPage);
               return DetailPage(
                 userId: _userId,
                 auth: widget.auth,
                 onSignedOut: _onSignedOut,
-                latitude: 38,
-                longitude: 38,
+                latitude: -38.0033,
+                longitude: -57.5528,
                 mail: "hotelmalada@gmail.com",
                 name: "Hotel Malada",
                 phoneNumber: "+549223004466",

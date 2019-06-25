@@ -4,7 +4,6 @@ import 'package:mdq/pages/root_page.dart';
 import 'package:mdq/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mdq/widgets/SliverAppbar.dart';
-import 'package:mdq/pages/detail_page.dart';
 
 
 class CategoryExpanded extends StatefulWidget {
@@ -32,7 +31,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
   @override
   void initState() {
     super.initState();
-
+    print(widget.hotelsData);
     _checkEmailVerification();
   }
 
@@ -128,7 +127,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
                   child: IconButton(
                       icon: Icon(Icons.arrow_back_ios),
                       onPressed:  () {
-                        Navigator.of(context).pushReplacement(RootPage.route("home", null, null));
+                        Navigator.of(context).pushReplacement(RootPage.route("home", null, null, 0));
                       }
                   ),
                 ),
@@ -152,7 +151,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
               itemExtent: 70,
               delegate: SliverChildBuilderDelegate((BuildContext context, int i){
 
-                  return _buildRow(widget.hotelsData[i]["Nombre"]);
+                  return _buildRow(widget.hotelsData[i]["Nombre"], i);
 
               },
                 childCount:widget.hotelsData == null
@@ -169,7 +168,8 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
 
 
 
-  Widget _buildRow(String t){
+
+  Widget _buildRow(String t, int i){
     return Card(
         color: Colors.white,
         margin: EdgeInsets.fromLTRB(20,10,20,0),
@@ -179,7 +179,8 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
           child: InkWell(
             splashColor: Colors.deepOrange,
             onTap:() async {
-              Navigator.of(context).pushReplacement(RootPage.route("detail", null, null));
+            print(i);
+            Navigator.of(context).pushReplacement(RootPage.route("detail", widget.category, null, i));
           },
             child: ListTile(
               title: Text(
