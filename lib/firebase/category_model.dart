@@ -26,6 +26,7 @@ class Category {
   Category.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
+
   @override
   String toString() => name;
 }

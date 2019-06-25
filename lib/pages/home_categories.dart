@@ -8,7 +8,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:mdq/firebase/firebase_api.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.onSignedOut})
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
 //
   List<Category> categories = FireBaseAPI.getCategoriesList();
   bool _isEmailVerified = false;
-//  List<ListTile> elements = new List();
+
   @override
   void initState() {
     super.initState();
@@ -252,7 +251,7 @@ class _HomePageState extends State<HomePage> {
 //    "IdServicioAlojamiento": "",
 //    "Nombre": ""
 //  });
-//
+
 //  var bodyInmobiliaria = json.encode({
 //    "Token": "12345678901234567890123456789012",
 //    "PagNumero": "",
@@ -264,7 +263,7 @@ class _HomePageState extends State<HomePage> {
 //    "SoloConAlquilerTuristico": "false",
 //    "Nombre": ""
 //  });
-//
+
 //  var bodyAgencia = json.encode({
 //    "Token": "12345678901234567890123456789012",
 //    "PagNumero": "",
@@ -276,7 +275,7 @@ class _HomePageState extends State<HomePage> {
 //    "IdTipoOperacion": "",
 //    "Nombre": ""
 //  });
-//
+
 //  var bodyTransporte = json.encode({
 //    "Token": "12345678901234567890123456789012",
 //    "PagNumero": "",
@@ -288,7 +287,7 @@ class _HomePageState extends State<HomePage> {
 //    "IdDestino": "",
 //    "Nombre": ""
 //  });
-//
+
 //  var bodyCongreso = json.encode({
 //    "Token": "12345678901234567890123456789012",
 //    "PagNumero": "",
@@ -299,7 +298,7 @@ class _HomePageState extends State<HomePage> {
 //    "Capacidad": "",
 //    "Nombre": ""
 //  });
-//
+
 //  var bodyPlaya = json.encode({
 //    "Token": "12345678901234567890123456789012",
 //    "PagNumero": "",
@@ -323,47 +322,115 @@ class _HomePageState extends State<HomePage> {
 //    "Nombre":""
 //  });
 
-  Future<String> getRubro(String rubro) async {
+  Future<List> getRubro(int index) async {
     //var response;
-
     var body;
+    switch (categories[index].name) {
+      case "Hoteles":
+        body = json.encode({
+          "Token": categories[index].token,
+          "PagNumero": "",
+          "RegsXPag": "",
+          "LatCentro": "-38.0003561526665",
+          "LongCentro": "-57.5495535981007",
+          "DistCentro": "10000",
+          "IdCategoria": "",
+          "IdZona": "",
+          "IdServicioAlojamiento": "",
+          "Nombre": ""
+        });
+        break;
 
-    switch (rubro) {
-//      case "Hoteles":
-//        body = bodyHotel;
-//        break;
-//
-//      case "Inmobiliarias":
-//        body = bodyInmobiliaria;
-//        break;
-//
-//      case "Agencias":
-//        body = bodyAgencia;
-//        break;
-//
-//      case "Transportes":
-//        body = bodyTransporte;
-//        break;
-//
-//      case "Salones":
-//        body = bodyCongreso;
-//        break;
-//
-//      case "Playas":
-//        body = bodyPlaya;
-//        break;
-//
-//      case "Eventos":
-//        body = bodyEvento;
-//        break;
+      case "Inmobiliarias":
+        body = json.encode({
+          "Token": categories[index].token,
+          "PagNumero": "",
+          "RegsXPag": "",
+          "LatCentro": "-38.0003561526665",
+          "LongCentro": "-57.5495535981007",
+          "DistCentro": "10000",
+          "IdZonaOperacion": "",
+          "SoloConAlquilerTuristico": "false",
+          "Nombre": ""
+        });
+        break;
+
+      case "Agencias":
+        body = json.encode({
+          "Token": categories[index].token,
+          "PagNumero": "",
+          "RegsXPag": "",
+          "LatCentro": "-38.0003561526665",
+          "LongCentro": "-57.5495535981007",
+          "DistCentro": "10000",
+          "IdCategoria": "",
+          "IdTipoOperacion": "",
+          "Nombre": ""
+        });
+        break;
+
+      case "Transportes":
+        body = json.encode({
+          "Token": categories[index].token,
+          "PagNumero": "",
+          "RegsXPag": "",
+          "LatCentro": "-38.0003561526665",
+          "LongCentro": "-57.5495535981007",
+          "DistCentro": "10000",
+          "IdTipoMedio": "",
+          "IdDestino": "",
+          "Nombre": ""
+        });
+        break;
+
+      case "Salones":
+        body = json.encode({
+          "Token": categories[index].token,
+          "PagNumero": "",
+          "RegsXPag": "",
+          "LatCentro": "-38.0003561526665",
+          "LongCentro": "-57.5495535981007",
+          "DistCentro": "10000",
+          "Capacidad": "",
+          "Nombre": ""
+        });
+        break;
+
+      case "Playas":
+        body = json.encode({
+          "Token": categories[index].token,
+          "PagNumero": "",
+          "RegsXPag": "",
+          "LatCentro": "-38.0003561526665",
+          "LongCentro": "-57.5495535981007",
+          "DistCentro": "10000",
+          "IdZona": "",
+          "IdAccesibilidad": "",
+          "Nombre": ""
+        });
+        break;
+
+      case "Eventos":
+        body = json.encode({
+          "Token" : categories[index].token,
+          "PagNumero":"",
+          "RegsXPag" :"",
+          "IdCategoria" :"",
+          "IdSubCategoria" :"",
+          "FechaDesde" :"20190622",
+          "FechaHasta" :"20190822",
+          "Nombre":""
+        });
+        break;
     }
 
-    var response = await http.post(Uri.encodeFull(this.category.url),
+    var response = await http.post(Uri.encodeFull(categories[index].url),
         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
         body: body);
 
     var data = json.decode(response.body);
-    dataList = data[this.category.name]; // guardo toda la data de "Hoteles"
+    dataList = data[categories[index].name];
+    return dataList;
   }
 
 
@@ -378,7 +445,7 @@ class _HomePageState extends State<HomePage> {
             splashColor: Colors.deepOrange,
             onTap: () async {
               this.category = categories[i];
-              await this.getRubro(this.category.name);
+              await this.getRubro(i);
               Navigator.of(context).pushReplacement(RootPage.route("expanded", categories[i], dataList));
             },
             child: ListTile(
@@ -390,8 +457,6 @@ class _HomePageState extends State<HomePage> {
               contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             ),
           ),
-
         ));
-
   }
 }

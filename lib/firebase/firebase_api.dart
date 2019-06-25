@@ -61,7 +61,7 @@ class FireBaseAPI {
     });
   }
 
-  static List<Category >getCategoriesList(){
+  static List<Category> getCategoriesList(){
     if(categories != null){
       return categories;
     }
