@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Timer _timer;
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     _timer = Timer(const Duration(seconds: 5), _onShowLogin);
 
