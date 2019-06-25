@@ -179,8 +179,6 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
           child: InkWell(
             splashColor: Colors.deepOrange,
             onTap:() async {
-//              await Navigator.of(context).pushReplacement(DetailPage.route('Hotel gaston', 'solis', 540, 38, 38, '223-58', 'a@a.com',
-//                  this.widget.auth, this.widget.onSignedOut, this.widget.userId));
               Navigator.of(context).pushReplacement(RootPage.route("detail", null, null));
           },
             child: ListTile(

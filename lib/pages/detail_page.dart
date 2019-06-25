@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mdq/services/authentication.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class DetailPage extends StatelessWidget {
+
+class DetailPage extends StatefulWidget {
   DetailPage(
       {Key key, this.auth, this.userId, this.onSignedOut, this.name, this.street, this.streetNumber,
         this.latitude, this.longitude, this.phoneNumber, this.mail})
@@ -18,26 +20,49 @@ class DetailPage extends StatelessWidget {
   final String phoneNumber;
   final String mail;
 
+//  static Route<dynamic> route(String name, String street, int sNumber,
+//      double lat, double lon, String pNumber, String mail,
+//      BaseAuth auth, VoidCallback onSignedOut, String userId) {
+//
+//    return MaterialPageRoute(
+//      builder: (context) =>
+//          DetailPage(
+//            auth: auth,
+//            onSignedOut: onSignedOut,
+//            userId: userId,
+//            name: name,
+//            street: street,
+//            streetNumber: sNumber,
+//            latitude: lat,
+//            longitude: lon,
+//            phoneNumber: pNumber,
+//            mail: mail,),
+//    );
+//  }
 
-  static Route<dynamic> route(String name, String street, int sNumber,
-      double lat, double lon, String pNumber, String mail,
-      BaseAuth auth, VoidCallback onSignedOut, String userId) {
+  @override
+  State<StatefulWidget> createState() => new _DetailPage();
+}
 
-    return MaterialPageRoute(
-      builder: (context) =>
-          DetailPage(
-            auth: auth,
-            onSignedOut: onSignedOut,
-            userId: userId,
-            name: name,
-            street: street,
-            streetNumber: sNumber,
-            latitude: lat,
-            longitude: lon,
-            phoneNumber: pNumber,
-            mail: mail,),
-    );
+class _DetailPage extends State<DetailPage> {
+
+  GoogleMapController mapController;
+  Set<Marker> markers = Set();
+
+  void onMapCreated(controller) {
+    setState(() {
+      mapController = controller;
+
+      markers.add(
+        Marker(
+            markerId: MarkerId('HOTEL GASTON'),
+            position: LatLng(-38.0033, -57.5528),
+        )
+      );
+
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +93,7 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.name,
+                    child: new Text( widget.name,
                           style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                           ),
                     ),
@@ -94,7 +119,7 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.street + this.streetNumber.toString(),
+                    child: new Text( widget.street + widget.streetNumber.toString(),
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
                   ),
@@ -119,7 +144,7 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.phoneNumber.toString(),
+                    child: new Text( widget.phoneNumber.toString(),
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
                   ),
@@ -127,7 +152,7 @@ class DetailPage extends StatelessWidget {
               ],
             ),
 
-            Row(
+          Row(
               children: <Widget>[
                 new Container(
                   child: new Icon(
@@ -145,19 +170,34 @@ class DetailPage extends StatelessWidget {
                 new Expanded(
                   child: new Container(
                     padding: new EdgeInsets.only(left: 8.0),
-                    child: new Text( this.mail,
+                    child: new Text( widget.mail,
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
                   ),
                 ),
               ],
             ),
+        new Expanded(
+          child: GoogleMap(
+              onMapCreated: onMapCreated,
+              initialCameraPosition: CameraPosition(target: LatLng(widget.latitude, widget.longitude),
+                                                    zoom: 16.0,/* bearing: 192.8334901395799,tilt: 59.440717697143555,*/
+              ),
+              mapType: MapType.normal,
+              markers: markers,
+            ),
 
+
+
+        ),
           ],
         ),
       ),
     );
   }
+
+
+  // Metodos para sesion y logout.
 
   bool _isEmailVerified = false;
 
@@ -168,14 +208,14 @@ class DetailPage extends StatelessWidget {
   }
 
   void _checkEmailVerification() async {
-    _isEmailVerified = await this.auth.isEmailVerified();
+    _isEmailVerified = await widget.auth.isEmailVerified();
     if (!_isEmailVerified) {
       _showVerifyEmailDialog();
     }
   }
 
   void _resentVerifyEmail() {
-    this.auth.sendEmailVerification();
+    widget.auth.sendEmailVerification();
     _showVerifyEmailSentDialog();
   }
 
@@ -236,14 +276,14 @@ class DetailPage extends StatelessWidget {
 
   _signOut() async {
     try {
-      await this.auth.signOut();
-      this.onSignedOut();
+      await widget.auth.signOut();
+      widget.onSignedOut();
     } catch (e) {
       print(e);
     }
   }
-
 }
+
 
 
 
