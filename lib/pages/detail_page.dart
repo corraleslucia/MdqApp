@@ -63,7 +63,9 @@ class _DetailPage extends State<DetailPage> {
       markers.add(
         Marker(
             markerId: MarkerId('HOTEL GASTON'),
-            position: LatLng(-38.0033, -57.5528),
+            position: LatLng(widget.latitude, widget.longitude),
+            infoWindow: InfoWindow(title: widget.name, snippet: 'go here'),
+
         )
       );
 
@@ -79,10 +81,13 @@ class _DetailPage extends State<DetailPage> {
         backgroundColor: Colors.deepOrange,
       ),
       body: new Container(
-        child: new Column(
+        color: Colors.deepOrange.withOpacity(0.2),
+        padding: EdgeInsets.fromLTRB(20,0,20,20),
 
+        child: new Column(
           children: <Widget>[
             Row(
+
               children: <Widget>[
                 new Container(
                   child: new Icon(
