@@ -21,7 +21,7 @@ dependencies:
     sdk: flutter
 
   cloud_firestore: ^0.12.5
-#  flutter_slidable: ^0.4.9
+  flutter_slidable: ^0.4.9
   google_maps_flutter: ^0.5.11
   http: ^0.12.0+2
 
@@ -35,7 +35,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.7.2
-  flutter_slidable: ^0.4.9
+
 
 
 

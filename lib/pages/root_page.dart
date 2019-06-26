@@ -46,6 +46,7 @@ enum AuthStatus {
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
+//  Stream<QuerySnapshot> categoryStream ;
 
 
   @override
@@ -113,6 +114,8 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId == "J52c3lPyAvZSASo80BzEoJBwJ3J3") {
+//          categoryStream =
+//              Firestore.instance.collection('categories').snapshots();
           return new HomePageAdmin(
             userId: _userId,
             auth: widget.auth,
