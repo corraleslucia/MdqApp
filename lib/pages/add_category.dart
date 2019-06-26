@@ -1,4 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mdq/firebase/firebase_api.dart';
 import 'package:mdq/services/authentication.dart';

@@ -7,7 +7,7 @@ class FireBaseAPI {
   static List<Category> categories;
 
   static Stream<QuerySnapshot> categoryStream =
-      Firestore.instance.collection('categories').snapshots();
+  Firestore.instance.collection('categories').snapshots();
 
   static CollectionReference reference =
       Firestore.instance.collection('categories');
@@ -24,6 +24,7 @@ class FireBaseAPI {
     'congreso': Icons.business,
     'agencia': Icons.airplanemode_active
   };
+
 
   static addCategory(
       String name, String url, String token, String method, String icon) {

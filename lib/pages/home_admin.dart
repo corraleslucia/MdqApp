@@ -7,19 +7,24 @@ import 'package:mdq/pages/add_category.dart';
 import 'package:mdq/services/authentication.dart';
 
 class HomePageAdmin extends StatefulWidget {
-  HomePageAdmin({Key key, this.auth, this.userId, this.onSignedOut})
+  HomePageAdmin(
+      {Key key, this.auth, this.userId, this.onSignedOut})
       : super(key: key);
 
   final BaseAuth auth;
   final VoidCallback onSignedOut;
   final String userId;
 
+
   @override
   State<StatefulWidget> createState() => new _HomePageAdminState();
 }
 
 class _HomePageAdminState extends State<HomePageAdmin> {
+
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Stream<QuerySnapshot> stream;
 
   bool _isEmailVerified = false;
 
@@ -177,7 +182,10 @@ class _HomePageAdminState extends State<HomePageAdmin> {
           return Center(
             child: Text(
               "There are no categories loaded.",
-              style: Theme.of(context).textTheme.title,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .title,
             ),
           );
         }
@@ -185,14 +193,30 @@ class _HomePageAdminState extends State<HomePageAdmin> {
     );
   }
 
-  Widget _buildCategoriesList(
-      BuildContext context, List<DocumentSnapshot> snapshot) {
-    return ListView(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 20.0),
-      children:
-          snapshot.map((data) => _buildCategoryItem(context, data)).toList(),
+//CAMBIOOOOOOO
+
+//  Widget _buildCategoriesList(
+//      BuildContext context, List<DocumentSnapshot> snapshot) {
+//    return ListView(
+//      physics: NeverScrollableScrollPhysics(),
+//      shrinkWrap: true,
+//      padding: const EdgeInsets.only(top: 20.0),
+//      children:
+//          snapshot.map((data) => _buildCategoryItem(context, data)).toList(),
+//    );
+//  }
+
+  Widget _buildCategoriesList(BuildContext context,
+      List<DocumentSnapshot> snapshot) {
+    return new ListView.builder
+    (
+        itemCount: snapshot.length,
+        physics: NeverScrollableScrollPhysics(),
+    shrinkWrap: true,
+    padding: const EdgeInsets.only(top: 20.0),
+    itemBuilder: (context,index) {
+      return _buildCategoryItem(context, snapshot[index]);
+    }
     );
   }
 
@@ -210,9 +234,11 @@ class _HomePageAdminState extends State<HomePageAdmin> {
                   caption: 'Edit',
                   color: Colors.blue,
                   icon: Icons.edit,
-                  onTap: () => Navigator.of(context).push(
+                  onTap: () =>
+                      Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => AddCategoryDialog(
+                          builder: (context) =>
+                              AddCategoryDialog(
                                 docId: data.documentID,
                                 name: category.name,
                                 url: category.url,
@@ -245,8 +271,8 @@ class _HomePageAdminState extends State<HomePageAdmin> {
     );
   }
 
-  Future<bool> _buildConfirmationDialog(
-      BuildContext context, String documentID) {
+  Future<bool> _buildConfirmationDialog(BuildContext context,
+      String documentID) {
     return showDialog<bool>(
       context: context,
       builder: (context) {
