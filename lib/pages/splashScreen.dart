@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _onShowLogin() {
     if(mounted){
-      Navigator.of(context).pushReplacement(RootPage.route("home", null, null, null));
+      Navigator.of(context).pushReplacement(RootPage.route("home", null, null, null, null));
     }
   }
 

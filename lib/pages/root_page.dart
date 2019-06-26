@@ -9,20 +9,21 @@ import 'package:mdq/pages/home_admin.dart';
 import 'category_expanded.dart';
 
 class RootPage extends StatefulWidget {
-  RootPage({this.auth, this.page, this.category, this.elements, this.indexToDetailPage});
+  RootPage({this.auth, this.page, this.category, this.elements, this.indexToDetailPage, this.iconoCategoria});
 
   final BaseAuth auth;  // sesion
   final String page;    // pagina de redireccion
   final Category category;  // categoria para lista detalle - expanded
   final List elements;  // lista para lista detalle - expanded
   final int indexToDetailPage; // indice del item seleccionado para mostrar detalles
+  final IconData iconoCategoria;
 
   @override
   State<StatefulWidget> createState() => new _RootPageState();
 
-  static Route<dynamic> route(String pageTo, Category cat, List elem, int index) {
+  static Route<dynamic> route(String pageTo, Category cat, List elem, int index, IconData icono) {
     return MaterialPageRoute(
-      builder: (context) => RootPage(auth: new Auth(), page: pageTo, category: cat, elements: elem, indexToDetailPage: index),
+      builder: (context) => RootPage(auth: new Auth(), page: pageTo, category: cat, elements: elem, indexToDetailPage: index, iconoCategoria: icono),
     );
   }
 }
@@ -68,7 +69,7 @@ class _RootPageState extends State<RootPage> {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
       _userId = "";
-      Navigator.of(context).pushReplacement(RootPage.route("home", null, null, null));
+      Navigator.of(context).pushReplacement(RootPage.route("home", null, null, null, null));
     });
   }
 
@@ -82,11 +83,39 @@ class _RootPageState extends State<RootPage> {
   }
 
   DetailElement getElementDetails(String name, int index) {
-    DetailElement returnValue;
-    print("#################################-------#####");
-    print(name);
-    print(index);
+    DetailElement returnValue = new DetailElement();
+    print(widget.elements[index]);
+    print(widget.elements[index]["Nombre"]);
+    switch (name){
+      case "Hoteles":
+      case "Inmobiliarias":
+      case "Agencias":
+      case "Transportes":
+      case "Salones":
+      case "Playas":
+      case "Gastronomia":
+        returnValue.name = widget.elements[index]["Nombre"];
+        returnValue.street = widget.elements[index]["CalleRuta"];
+        returnValue.streetNumber = int.parse(widget.elements[index]["AlturaKM"]);
+        returnValue.latitude =  double.parse(widget.elements[index]["Latitud"]);
+        returnValue.longitude = double.parse(widget.elements[index]["Longitud"]);
+        returnValue.phoneNumber = widget.elements[index]["Telefono1"];
+        returnValue.phoneNumber = widget.elements[index]["Telefono1"];
+        returnValue.mail = widget.elements[index]["Email"];
+        break;
 
+      case "Eventos":
+//        returnValue.name = widget.elements[index]["Nombre"];
+//        returnValue.street = widget.elements[index]["CalleRuta"];
+//        returnValue.streetNumber = int.parse(widget.elements[index]["AlturaKM"]);
+//        returnValue.latitude =  double.parse(widget.elements[index]["Latitud"]);
+//        returnValue.longitude = double.parse(widget.elements[index]["Longitud"]);
+//        returnValue.phoneNumber = widget.elements[index]["Telefono1"];
+//        returnValue.phoneNumber = widget.elements[index]["Telefono1"];
+//        returnValue.mail = widget.elements[index]["Email"];
+//        break;
+    }
+    return returnValue;
   }
 
   @override
@@ -120,26 +149,26 @@ class _RootPageState extends State<RootPage> {
               );
               break;
             case "expanded":
+
               return CategoryExpanded(
                   userId: _userId,
                   auth: widget.auth,
                   onSignedOut: _onSignedOut,
                   category: widget.category,
-                  hotelsData: widget.elements
+                  hotelsData: widget.elements,
+                  icon: widget.iconoCategoria,
               );
             case "detail":
-              getElementDetails(widget.category.name, widget.indexToDetailPage);
+              DetailElement de = getElementDetails(widget.category.name, widget.indexToDetailPage);
+              print(de.toString());
               return DetailPage(
                 userId: _userId,
                 auth: widget.auth,
                 onSignedOut: _onSignedOut,
-                latitude: -38.0033,
-                longitude: -57.5528,
-                mail: "hotelmalada@gmail.com",
-                name: "Hotel Malada",
-                phoneNumber: "+549223004466",
-                street: "Av. Pedro Luro",
-                streetNumber: 5669,
+                detail: de,
+                category: widget.category,
+                dataList: widget.elements,
+                icon: widget.iconoCategoria,
               );
               break;
             default:

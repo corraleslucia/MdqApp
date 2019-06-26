@@ -7,7 +7,7 @@ import 'package:mdq/widgets/SliverAppbar.dart';
 
 
 class CategoryExpanded extends StatefulWidget {
-  CategoryExpanded({Key key, this.auth, this.userId, this.onSignedOut, this.category, this.hotelsData})
+  CategoryExpanded({Key key, this.auth, this.userId, this.onSignedOut, this.category, this.hotelsData, this.icon})
       : super(key: key);
 
   final BaseAuth auth;
@@ -15,6 +15,7 @@ class CategoryExpanded extends StatefulWidget {
   final String userId;
   final Category category;
   final List hotelsData;
+  final IconData icon;
 
   @override
   State<StatefulWidget> createState() => new _CategoryExpandedState();
@@ -122,15 +123,12 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
               pinned: true,
               snap: false,
               floating: false,
+              backButton: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color: Colors.white,
+                  onPressed:() => Navigator.of(context).pushReplacement(RootPage.route("home", null, null, 0, null))
+              ),
               actions: <Widget>[
-                new Container(
-                  child: IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      onPressed:  () {
-                        Navigator.of(context).pushReplacement(RootPage.route("home", null, null, 0));
-                      }
-                  ),
-                ),
                 new Container(
                     child: OutlineButton(
                       child: new Text(
@@ -150,15 +148,11 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
             SliverFixedExtentList(
               itemExtent: 70,
               delegate: SliverChildBuilderDelegate((BuildContext context, int i){
-
                   return _buildRow(widget.hotelsData[i]["Nombre"], i);
-
               },
                 childCount:widget.hotelsData == null
                     ? 0
                     : widget.hotelsData.length,
-
-
               ),
             ),
           ],
@@ -180,7 +174,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
             splashColor: Colors.deepOrange,
             onTap:() async {
             print(i);
-            Navigator.of(context).pushReplacement(RootPage.route("detail", widget.category, null, i));
+            Navigator.of(context).pushReplacement(RootPage.route("detail", widget.category, widget.hotelsData, i, widget.icon));
           },
             child: ListTile(
               title: Text(
@@ -188,7 +182,7 @@ class _CategoryExpandedState extends State<CategoryExpanded> {
                   style: TextStyle(
                     fontSize: 14,
                   )),
-              trailing: Icon(Icons.hotel),
+              trailing: Icon(widget.icon),
               contentPadding: EdgeInsets.fromLTRB(20,0,20,0),
             ),
           ),
