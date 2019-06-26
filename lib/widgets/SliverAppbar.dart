@@ -27,7 +27,6 @@ class _SliverAppBarState extends State<SliverAppBarCustom> {
       expandedHeight: 130.0,
       leading: widget.backButton,
       flexibleSpace: FlexibleSpaceBar(
-
         centerTitle: false,
         titlePadding: EdgeInsets.fromLTRB(20, 0, 0, 90),
         background: Image.asset(

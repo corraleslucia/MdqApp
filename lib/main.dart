@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:mdq/services/authentication.dart';
-//import 'package:mdq/pages/root_page.dart';
 import'package:mdq/pages/splashScreen.dart';
 
 void main() {
@@ -15,7 +13,7 @@ class MyApp extends StatelessWidget {
         title: "Mdq App",
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
-          primarySwatch: Colors.orange,
+          primarySwatch: Colors.blue,
         ),
         home: new SplashScreen());
   }

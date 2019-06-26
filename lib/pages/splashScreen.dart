@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.orange[600],
+      color: Colors.blue[600],
       child: Column(
         children: <Widget>[
           SizedBox(height: 100.0,),

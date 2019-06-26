@@ -59,49 +59,52 @@ class _DetailPage extends State<DetailPage> {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Detalles"),
-        backgroundColor: Colors.deepOrange,
-        actions: <Widget>[
-          new FlatButton(
-              child: new Text('Logout',
-                  style: new TextStyle(
-                      fontSize: 17.0,
-                      color: Colors.white)),
-                  onPressed: _signOut
-          ),
-        ],
-        leading: IconButton(icon:Icon(Icons.arrow_back),
-          onPressed:() => Navigator.of(context).pushReplacement(RootPage.route("expanded", widget.category, widget.dataList, 0, widget.icon))
-        )
+          title: new Text("Detalles",
+          style: TextStyle(
+            color: Colors.white
+          ),),
+          actions: <Widget>[
+            new FlatButton(
+                child: new Text('Logout',
+                    style: new TextStyle(
+                        fontSize: 17.0,
+                        color: Colors.white)),
+                onPressed: _signOut
+            ),
+          ],
+          leading: IconButton(icon:Icon(Icons.arrow_back),
+              color: Colors.white,
+              onPressed:() => Navigator.of(context).pushReplacement(RootPage.route("expanded", widget.category, widget.dataList, 0, widget.icon))
+          )
       ),
       body: new Container(
-        color: Colors.deepOrange.withOpacity(0.2),
         padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
         child: new Column(
-
           children: <Widget>[
             Row(
               children: <Widget>[
                 new Container(
                   child: new Icon(
                     Icons.label_important,
-                    color: Colors.deepOrange,
+                    color: Colors.blue,
                     size: 40.0,
                   ),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                 ),
 
                 new Container(
                   child: Text("Nombre:", textAlign: TextAlign.center,),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                 ),
 
                 new Expanded(
                   child: new Container(
-                    padding: new EdgeInsets.only(left: 8.0),
+                    padding: new EdgeInsets.fromLTRB(8, 0, 0, 10),
                     child: new Text( name,
-                          style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
-                          ),
+                      style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
                   ),
+                ),
               ],
             ),
 
@@ -110,19 +113,20 @@ class _DetailPage extends State<DetailPage> {
                 new Container(
                   child: new Icon(
                     Icons.map,
-                    color: Colors.deepOrange,
+                    color: Colors.blue,
                     size: 40.0,
-
-                    ),
+                  ),
+                  padding: new EdgeInsets.fromLTRB(0, 0, 0, 10),
                 ),
 
                 new Container(
                   child: Text("Dirección:", textAlign: TextAlign.center,),
+                  padding: new EdgeInsets.fromLTRB(0, 0, 0, 10),
                 ),
 
                 new Expanded(
                   child: new Container(
-                    padding: new EdgeInsets.only(left: 8.0),
+                    padding: new EdgeInsets.fromLTRB(8, 0, 0, 10),
                     child: new Text( street + streetNumber.toString(),
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
@@ -135,19 +139,20 @@ class _DetailPage extends State<DetailPage> {
                 new Container(
                   child: new Icon(
                     Icons.phone,
-                    color: Colors.deepOrange,
+                    color: Colors.blue,
                     size: 40.0,
-
                   ),
+                  padding: new EdgeInsets.fromLTRB(0, 0, 0, 10),
                 ),
 
                 new Container(
-                  child: Text("Telefono: :", textAlign: TextAlign.center,),
+                  child: Text("Telefono: ", textAlign: TextAlign.center,),
+                  padding: new EdgeInsets.fromLTRB(0, 0, 0, 10),
                 ),
 
                 new Expanded(
                   child: new Container(
-                    padding: new EdgeInsets.only(left: 8.0),
+                    padding: new EdgeInsets.fromLTRB(8, 0, 0, 10),
                     child: new Text( phoneNumber.toString(),
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
@@ -156,24 +161,25 @@ class _DetailPage extends State<DetailPage> {
               ],
             ),
 
-          Row(
+            Row(
               children: <Widget>[
                 new Container(
                   child: new Icon(
                     Icons.mail,
-                    color: Colors.deepOrange,
+                    color: Colors.blue,
                     size: 40.0,
-
                   ),
+                  padding: new EdgeInsets.fromLTRB(0, 00, 0, 30),
                 ),
 
                 new Container(
                   child: Text("Mail:", textAlign: TextAlign.center,),
+                  padding: new EdgeInsets.fromLTRB(0, 0, 0, 30),
                 ),
 
                 new Expanded(
                   child: new Container(
-                    padding: new EdgeInsets.only(left: 8.0),
+                    padding: new EdgeInsets.fromLTRB(8, 0, 0, 30),
                     child: new Text( mail,
                       style: new TextStyle( color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16.0,),
                     ),
@@ -181,25 +187,21 @@ class _DetailPage extends State<DetailPage> {
                 ),
               ],
             ),
-        new Expanded(
-          child: GoogleMap(
-              onMapCreated: onMapCreated,
-              initialCameraPosition: CameraPosition(target: LatLng(latitude, longitude),
-                                                    zoom: 16.0,/* bearing: 192.8334901395799,tilt: 59.440717697143555,*/
+            Expanded(
+              child: GoogleMap(
+                onMapCreated: onMapCreated,
+                initialCameraPosition: CameraPosition(target: LatLng(latitude, longitude),
+                  zoom: 16.0,/* bearing: 192.8334901395799,tilt: 59.440717697143555,*/
+                ),
+                mapType: MapType.normal,
+                markers: markers,
               ),
-              mapType: MapType.normal,
-              markers: markers,
             ),
-
-
-
-        ),
           ],
         ),
       ),
     );
   }
-
 
   // Metodos para sesion y logout.
 
