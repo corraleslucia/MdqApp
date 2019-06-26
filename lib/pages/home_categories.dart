@@ -30,24 +30,8 @@ class _HomePageState extends State<HomePage> {
   List dataList;
   Category category;
 
-//  List<Category> categories = FireBaseAPI.getCategoriesList();
-
   List<Category> categories;
 
-//  final myIcons = <String, IconData>{
-//    'hotel': Icons.hotel,
-//    'restaurant': Icons.restaurant,
-//    'museo': Icons.account_balance,
-//    'playa': Icons.beach_access,
-//    'transporte': Icons.directions_bus,
-//    'lugar': Icons.place,
-//    'inmobiliaria': Icons.home,
-//    'evento': Icons.event,
-//    'congreso': Icons.business,
-//    'agencia': Icons.airplanemode_active
-//  };
-//
-//  List<Category> categories = FireBaseAPI.getCategoriesList();
 
   bool _isEmailVerified = false;
 
@@ -301,7 +285,14 @@ class _HomePageState extends State<HomePage> {
         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
         body: body);
 
+//    var data = json.decode(response.body);
+//    dataList = data[categories[index].name];
+//    return dataList;
     var data = json.decode(response.body);
+    if((categories[index].name).compareTo("Gastronomia")==0){
+      dataList = data[categories[index].name + "s"];
+      return dataList;
+    }
     dataList = data[categories[index].name];
     return dataList;
   }
