@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mdq/models/category.dart';
 
 class FireBaseAPI {
-
   static List<Category> categories;
 
   static Stream<QuerySnapshot> categoryStream =
@@ -61,42 +60,68 @@ class FireBaseAPI {
     });
   }
 
-  static List<Category> getCategoriesList(){
-    if(categories != null){
+  static List<Category> getCategoriesList() {
+    if (categories != null) {
+      return categories;
+    } else {
+      FireBaseAPI.categoryStream.listen((data) => categories = [
+            (new Category(
+                data.documents[0]['name'],
+                data.documents[0]['url'],
+                data.documents[0]['token'],
+                data.documents[0]['method'],
+                myIcons[data.documents[0]['icon']])),
+            (new Category(
+                data.documents[1]['name'],
+                data.documents[1]['url'],
+                data.documents[1]['token'],
+                data.documents[1]['method'],
+                myIcons[data.documents[1]['icon']])),
+            (new Category(
+                data.documents[2]['name'],
+                data.documents[2]['url'],
+                data.documents[2]['token'],
+                data.documents[2]['method'],
+                myIcons[data.documents[2]['icon']])),
+            (new Category(
+                data.documents[3]['name'],
+                data.documents[3]['url'],
+                data.documents[3]['token'],
+                data.documents[3]['method'],
+                myIcons[data.documents[3]['icon']])),
+            (new Category(
+                data.documents[4]['name'],
+                data.documents[4]['url'],
+                data.documents[4]['token'],
+                data.documents[4]['method'],
+                myIcons[data.documents[4]['icon']])),
+            (new Category(
+                data.documents[5]['name'],
+                data.documents[5]['url'],
+                data.documents[5]['token'],
+                data.documents[5]['method'],
+                myIcons[data.documents[5]['icon']])),
+            (new Category(
+                data.documents[6]['name'],
+                data.documents[6]['url'],
+                data.documents[6]['token'],
+                data.documents[6]['method'],
+                myIcons[data.documents[6]['icon']])),
+            (new Category(
+                data.documents[7]['name'],
+                data.documents[7]['url'],
+                data.documents[7]['token'],
+                data.documents[7]['method'],
+                myIcons[data.documents[7]['icon']])),
+            (new Category(
+                data.documents[8]['name'],
+                data.documents[8]['url'],
+                data.documents[8]['token'],
+                data.documents[8]['method'],
+                myIcons[data.documents[8]['icon']]))
+          ]);
+
       return categories;
     }
-    categories = new List();
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[0]['name'], data.documents[0]['url'], data.documents[0]['token'],
-            data.documents[0]['method'], myIcons[data.documents[0]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[1]['name'], data.documents[1]['url'], data.documents[1]['token'],
-            data.documents[1]['method'], myIcons[data.documents[1]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[2]['name'], data.documents[2]['url'], data.documents[2]['token'],
-            data.documents[2]['method'], myIcons[data.documents[2]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[3]['name'], data.documents[3]['url'], data.documents[3]['token'],
-            data.documents[3]['method'], myIcons[data.documents[3]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[4]['name'], data.documents[4]['url'], data.documents[4]['token'],
-            data.documents[4]['method'], myIcons[data.documents[4]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[5]['name'], data.documents[5]['url'], data.documents[5]['token'],
-            data.documents[5]['method'], myIcons[data.documents[5]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[6]['name'], data.documents[6]['url'], data.documents[6]['token'],
-            data.documents[6]['method'], myIcons[data.documents[6]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[7]['name'], data.documents[7]['url'], data.documents[7]['token'],
-            data.documents[7]['method'], myIcons[data.documents[7]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[8]['name'], data.documents[8]['url'], data.documents[8]['token'],
-            data.documents[8]['method'], myIcons[data.documents[8]['icon']])));
-    FireBaseAPI.categoryStream.listen((data)=>
-        categories.add(new Category(data.documents[9]['name'].toString(), data.documents[9]['url'].toString(), data.documents[9]['token'].toString(),
-            data.documents[9]['method'].toString(), myIcons[data.documents[9]['icon'].toString()])));
-
-    return categories;
   }
 }

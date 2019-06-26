@@ -7,28 +7,48 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:mdq/firebase/firebase_api.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.auth, this.userId, this.onSignedOut})
+  HomePage({Key key, this.auth, this.userId, this.onSignedOut, this.categories})
       : super(key: key);
 
   final BaseAuth auth;
   final VoidCallback onSignedOut;
   final String userId;
+  final List<Category> categories;
 
   @override
-  State<StatefulWidget> createState() => new _HomePageState();
+  State<StatefulWidget> createState() => new _HomePageState(this.categories);
 
 }
 
 class _HomePageState extends State<HomePage> {
+  _HomePageState(this.categories);
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Map data;
   List dataList;
   Category category;
-  List<Category> categories = FireBaseAPI.getCategoriesList();
+
+//  List<Category> categories = FireBaseAPI.getCategoriesList();
+
+  List<Category> categories;
+
+//  final myIcons = <String, IconData>{
+//    'hotel': Icons.hotel,
+//    'restaurant': Icons.restaurant,
+//    'museo': Icons.account_balance,
+//    'playa': Icons.beach_access,
+//    'transporte': Icons.directions_bus,
+//    'lugar': Icons.place,
+//    'inmobiliaria': Icons.home,
+//    'evento': Icons.event,
+//    'congreso': Icons.business,
+//    'agencia': Icons.airplanemode_active
+//  };
+//
+//  List<Category> categories = FireBaseAPI.getCategoriesList();
+
   bool _isEmailVerified = false;
 
   @override
@@ -137,15 +157,24 @@ class _HomePageState extends State<HomePage> {
                 margin: EdgeInsets.fromLTRB(0, 10, 10, 10)),
           ],
         ),
-        SliverFixedExtentList(
-          itemExtent: 70,
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int i) {
-              return _buildRow(categories[i].name, i);
-            },
-            childCount: categories.length,
+//        SliverFixedExtentList(
+//          itemExtent: 70,
+//          delegate: SliverChildBuilderDelegate(
+//            (BuildContext context, int i) {
+//              return _buildRow(categories[i].name, i);
+//            },
+//            childCount: categories.length,
+//          ),
+//        ),
+           SliverFixedExtentList(
+            itemExtent: 70,
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int i) {
+                return _buildRow(categories[i].name, i);
+              },
+              childCount: categories.length,
+            ),
           ),
-        ),
       ],
     ));
   }

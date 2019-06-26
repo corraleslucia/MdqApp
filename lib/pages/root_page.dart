@@ -7,23 +7,36 @@ import 'package:mdq/services/authentication.dart';
 import 'package:mdq/pages/home_categories.dart';
 import 'package:mdq/pages/home_admin.dart';
 import 'category_expanded.dart';
+import 'package:mdq/firebase/firebase_api.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RootPage extends StatefulWidget {
+
   RootPage({this.auth, this.page, this.category, this.elements, this.indexToDetailPage, this.iconoCategoria});
 
-  final BaseAuth auth;  // sesion
-  final String page;    // pagina de redireccion
-  final Category category;  // categoria para lista detalle - expanded
-  final List elements;  // lista para lista detalle - expanded
+  final BaseAuth auth; // sesion
+  final String page; // pagina de redireccion
+  final Category category; // categoria para lista detalle - expanded
+  final List elements; // lista para lista detalle - expanded
   final int indexToDetailPage; // indice del item seleccionado para mostrar detalles
   final IconData iconoCategoria;
+  final List<Category> categories = FireBaseAPI.getCategoriesList();
 
   @override
   State<StatefulWidget> createState() => new _RootPageState();
 
-  static Route<dynamic> route(String pageTo, Category cat, List elem, int index, IconData icono) {
+  static Route<dynamic> route(String pageTo, Category cat, List elem,
+      int index, IconData icono) {
     return MaterialPageRoute(
-      builder: (context) => RootPage(auth: new Auth(), page: pageTo, category: cat, elements: elem, indexToDetailPage: index, iconoCategoria: icono),
+      builder: (context) =>
+          RootPage(auth: new Auth(),
+              page: pageTo,
+              category: cat,
+              elements: elem,
+              indexToDetailPage: index,
+              iconoCategoria: icono
+          ),
+
     );
   }
 }
@@ -37,6 +50,8 @@ enum AuthStatus {
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
+//  Stream<QuerySnapshot> categoryStream ;
+
 
   @override
   void initState() {
@@ -54,14 +69,13 @@ class _RootPageState extends State<RootPage> {
   }
 
   void _onLoggedIn() {
-    widget.auth.getCurrentUser().then((user){
+    widget.auth.getCurrentUser().then((user) {
       setState(() {
         _userId = user.uid.toString();
       });
     });
     setState(() {
       authStatus = AuthStatus.LOGGED_IN;
-
     });
   }
 
@@ -69,7 +83,8 @@ class _RootPageState extends State<RootPage> {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
       _userId = "";
-      Navigator.of(context).pushReplacement(RootPage.route("home", null, null, null, null));
+      Navigator.of(context).pushReplacement(
+          RootPage.route("home", null, null, null, null));
     });
   }
 
@@ -83,6 +98,7 @@ class _RootPageState extends State<RootPage> {
   }
 
   DetailElement getElementDetails(String name, int index) {
+
     DetailElement returnValue = new DetailElement();
     print(widget.elements[index]);
     print(widget.elements[index]["Nombre"]);
@@ -120,7 +136,6 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-
     switch (authStatus) {
       case AuthStatus.NOT_DETERMINED:
         return _buildWaitingScreen();
@@ -132,20 +147,21 @@ class _RootPageState extends State<RootPage> {
         );
         break;
       case AuthStatus.LOGGED_IN:
-        if(_userId.length > 0 && _userId == "J52c3lPyAvZSASo80BzEoJBwJ3J3"){
+        if (_userId.length > 0 && _userId == "J52c3lPyAvZSASo80BzEoJBwJ3J3") {
           return new HomePageAdmin(
-                userId: _userId,
-                auth: widget.auth,
-                onSignedOut: _onSignedOut,
-              );
+            userId: _userId,
+            auth: widget.auth,
+            onSignedOut: _onSignedOut,
+          );
         }
         else if (_userId.length > 0 && _userId != null) {
-          switch (widget.page){
+          switch (widget.page) {
             case "home":
               return new HomePage(
                 userId: _userId,
                 auth: widget.auth,
                 onSignedOut: _onSignedOut,
+                categories: widget.categories,
               );
               break;
             case "expanded":
@@ -178,7 +194,8 @@ class _RootPageState extends State<RootPage> {
                 onSignedOut: _onSignedOut,
               );
           }
-        } else return _buildWaitingScreen();
+        } else
+          return _buildWaitingScreen();
         break;
       default:
         return _buildWaitingScreen();

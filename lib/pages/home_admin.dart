@@ -7,8 +7,12 @@ import 'package:mdq/pages/add_category.dart';
 import 'package:mdq/services/authentication.dart';
 
 class HomePageAdmin extends StatefulWidget {
-  HomePageAdmin({Key key, this.auth, this.userId, this.onSignedOut})
-      : super(key: key);
+  HomePageAdmin({
+    Key key,
+    this.auth,
+    this.userId,
+    this.onSignedOut,
+  }) : super(key: key);
 
   final BaseAuth auth;
   final VoidCallback onSignedOut;
@@ -19,6 +23,8 @@ class HomePageAdmin extends StatefulWidget {
 }
 
 class _HomePageAdminState extends State<HomePageAdmin> {
+  Stream<QuerySnapshot> categoryStream ;
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool _isEmailVerified = false;
@@ -26,7 +32,7 @@ class _HomePageAdminState extends State<HomePageAdmin> {
   @override
   void initState() {
     super.initState();
-
+    categoryStream = Firestore.instance.collection('categories').snapshots();
     _checkEmailVerification();
   }
 
@@ -142,7 +148,7 @@ class _HomePageAdminState extends State<HomePageAdmin> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FireBaseAPI.categoryStream,
+      stream: categoryStream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
         if (snapshot.data.documents.length > 0) {
@@ -195,6 +201,20 @@ class _HomePageAdminState extends State<HomePageAdmin> {
           snapshot.map((data) => _buildCategoryItem(context, data)).toList(),
     );
   }
+
+//  Widget _buildCategoriesList(BuildContext context,
+//      List<DocumentSnapshot> snapshot) {
+//    return new ListView.builder
+//    (
+//        itemCount: snapshot.length,
+//        physics: NeverScrollableScrollPhysics(),
+//    shrinkWrap: true,
+//    padding: const EdgeInsets.only(top: 20.0),
+//    itemBuilder: (context,index) {
+//      return _buildCategoryItem(context, snapshot[index]);
+//    }
+//    );
+//  }
 
   Widget _buildCategoryItem(BuildContext context, DocumentSnapshot data) {
     final category = Category.fromSnapshot(data);
